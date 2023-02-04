@@ -1,0 +1,108 @@
+@font-face {
+    font-family: "Helvetica Neue";
+    src: url(“./fonts/HelveticaNeue.ttc”) format(“truetype”)
+}
+
+:root {
+    --button: #6B40E3;
+    --buttonHover: #7949FF;
+    --buttonActive: #512FAF;
+    --offBlack: #1A1A1A;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    background-image: url("../images/landing-background.png");
+}
+
+/* COMMON STYLING */
+button {
+    cursor: pointer;
+    height: 48px;
+    width: 261px;
+    border-radius: 4px;
+    padding: 18px 60px 18px 60px;
+    background-color: var(--button);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: 0.08em;
+}
+
+button:hover {
+    background-color: var(--buttonHover);
+}
+
+button:active {
+    background-color: var(--buttonActive);
+}
+
+input {
+    height: 48px;
+    width: 280px;
+    border-radius: 4px;
+    border: 1px solid #BCBCBC;
+    padding-left: 16px;
+    padding-top: 13px;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 21px;
+    letter-spacing: 0em;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+input:active {
+    border: 2px solid #BCBCBC;
+    color: #000000;
+}
+
+input:invalid {
+    border: 1px solid #EF5050
+}
+
+input:valid {
+    border: 1px solid #98E37E;
+}
+
+.landing--header {
+    width: 1780px;
+    border-bottom: 1px solid #1A1A1A;
+    margin-top: 25px;
+    margin-left: 70px;
+    padding-bottom: 26px;
+}
+
+.landing--button {
+    background: var(--offBlack);
+    border-radius: 8px;
+    width: 464px;
+    height: 60px;
+    font-size: 20px;
+    line-height: 24px;
+    color: #FFFFFF;
+    z-index: 999;
+    margin: 0 auto;
+}
+
+.landing--button:hover, .landing--button:active {
+    background: var(--offBlack);
+}
+
+.landing--logo--secondary {
+    position: absolute;
+    right: 545px;
+    top: 473px;
+    z-index: -1;
+}
+
+.landing--main {
+    display: grid;
+    place-items: center;
+    margin-top: 472px;
+}
