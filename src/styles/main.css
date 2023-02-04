@@ -24,15 +24,22 @@ body {
 /* COMMON STYLING */
 button {
     cursor: pointer;
+    border: none;
     height: 48px;
     width: 261px;
     border-radius: 4px;
-    padding: 18px 60px 18px 60px;
+    display: grid;
+    place-items: center;
     background-color: var(--button);
     font-weight: 500;
     font-size: 16px;
     line-height: 20px;
     letter-spacing: 0.08em;
+}
+
+.nav--button {
+    width: 151px;
+    color: white;
 }
 
 button:hover {
@@ -45,11 +52,11 @@ button:active {
 
 input {
     height: 48px;
-    width: 280px;
     border-radius: 4px;
     border: 1px solid #BCBCBC;
     padding-left: 16px;
-    padding-top: 13px;
+    display: flex;
+    align-items: center;
     font-size: 16px;
     font-weight: 400;
     line-height: 21px;
@@ -70,6 +77,19 @@ input:valid {
     border: 1px solid #98E37E;
 }
 
+textarea {
+    width: 798px; 
+    height: 103px; 
+    resize: none;
+    border: 1px solid #BCBCBC;
+    padding-top: 13px;
+    padding-left: 16px;
+    border-radius: 4px;
+
+}
+
+/* LANDING PAGE */
+
 .landing--header {
     width: 1780px;
     border-bottom: 1px solid #1A1A1A;
@@ -86,7 +106,6 @@ input:valid {
     font-size: 20px;
     line-height: 24px;
     color: #FFFFFF;
-    z-index: 999;
     margin: 0 auto;
 }
 
@@ -105,4 +124,137 @@ input:valid {
     display: grid;
     place-items: center;
     margin-top: 472px;
+}
+
+/* SURVEY */
+
+.survey {
+    width: 798px;
+    margin-left: 149px; 
+}
+
+.nav__button--secondary {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #FFFFFF;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    position: absolute;
+    left: 48px;
+    top: 45px;
+}
+
+.survey__body {
+    background-color: #F9F9F9;
+    background-image: none;
+    display: flex;
+    justify-content: space-between;
+}
+
+.survey__header {
+    margin-top: 47px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--offBlack);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 77px;
+}
+
+.survey__title {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px; 
+}
+
+.nav__span {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    color: var(--offBlack);
+}
+
+.input-groups__names {
+    display: flex;
+    justify-content: space-between;
+}
+
+.input--groups__file {
+    display: flex;
+    align-items: center;
+    margin: 54px 0;
+}
+
+.input--group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group__label {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 21px;
+    color: #000000;
+}
+
+label[for="file-upload"] {
+    width: 107px; 
+    height: 27px; 
+    background: #0E80BF;
+    border-radius: 4px; 
+    display: grid;
+    place-items: center;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+    cursor: pointer;
+    margin-left: 19px;
+}
+
+.input-group__input {
+    width: 798px;
+}
+
+input[name="name"], input[name="surname"] {
+    width: 371px;
+}
+
+.input-group__span {
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 21px;    
+    color: #2E2E2E; 
+    /* margin-top: 8px; */
+}
+
+.survey--nav {
+    display: flex;
+    justify-content: space-between;
+    /* align-items: center; */
+    margin-top: 160px;
+}
+
+.email {
+    margin-top: 33px;
+    margin-bottom: 29px;
+}
+
+/* RESUME */
+.resume {
+    height: 100vh;
+    width: 822px;
+    position: relative;
+    background-color: white;
+}
+
+.logo--small {
+    position: absolute;
+    bottom: 44px;
+    left: 78px;
 }
