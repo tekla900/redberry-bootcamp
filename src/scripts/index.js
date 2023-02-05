@@ -215,3 +215,46 @@ function populateResume(formData) {
             </div>
     `
 }
+
+// ADDING EXPERIENCES
+
+let addBtn = document.getElementById("add--experience");
+
+addBtn.addEventListener("click", function() {
+  let section = document.querySelector(".experience");
+  
+  section.innerHTML += `
+    <div class="input--group ">
+        <label class="input-group__label" for="position">თანამდებობა</label>
+        <input class="input-group__input" type="text" name="position" id="position" placeholder="თანამდებობა" data-regex="^.{2,}$">
+        <span class="input-group__span">მინიმუმ 2 სიმბოლო</span>
+    </div>
+
+    <div class="input--group employer">
+        <label class="input-group__label" for="employer">დამსაქმებელი</label>
+        <input class="input-group__input" type="text" name="employer" id="employer" placeholder="დამსაქმებელი" data-regex="^.{2,}$">
+        <span class="input-group__span">მინიმუმ 2 სიმბოლო</span>
+    </div>
+
+    <div class="input-groups__names">
+        <div class="input--group">
+            <label for="start_date">დაწყების რიცხვი</label>
+            <input type="date" id="start_date" name="start_date"
+            value="mm/dd/yyyy" min="1900-01-01">
+        </div>
+        
+        <div class="input--group">
+            <label for="due_date">დამთავრების რიცხვი</label>
+            <input type="date" id="due_date" name="due_date"
+            value="mm/dd/yyyy" min="1900-01-01">
+        </div>
+    </div>
+
+    <div class="input--group experience--info">
+        <label class="input-group__label" for="description">აღწერა</label>
+        <textarea name="description" id="description"  placeholder="როლი თანამდებობაზე და ზოგადი აღწერა" data-regex="^.+$"></textarea>
+    </div>
+
+    <hr>
+  `;
+});
