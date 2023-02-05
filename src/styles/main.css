@@ -35,11 +35,11 @@ button {
     font-size: 16px;
     line-height: 20px;
     letter-spacing: 0.08em;
+    color: white;
 }
 
 .nav--button {
     width: 151px;
-    color: white;
 }
 
 button:hover {
@@ -115,7 +115,7 @@ input:-webkit-autofill:active{
     height: 60px;
     font-size: 20px;
     line-height: 24px;
-    color: #FFFFFF;
+    /* color: #FFFFFF; */
     margin: 0 auto;
 }
 
@@ -147,7 +147,7 @@ input:-webkit-autofill:active{
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: #FFFFFF;
+    background-color:#FFFFFF;
     display: grid;
     place-items: center;
     cursor: pointer;
@@ -157,7 +157,7 @@ input:-webkit-autofill:active{
 }
 
 .survey__body {
-    background-color: #F9F9F9;
+    background-color:#F9F9F9;
     background-image: none;
     display: flex;
     justify-content: space-between;
@@ -231,7 +231,9 @@ label[for="file-upload"] {
     width: 798px;
 }
 
-input[name="name"], input[name="surname"] {
+
+/* ??? */
+input[name="name"], input[name="surname"], input[type="date"] {
     width: 371px;
 }
 
@@ -325,4 +327,27 @@ input[name="name"], input[name="surname"] {
     width: 246px;
     height: 246px;
     border-radius: 50%;
+}
+
+/* EXPEREICES */
+
+.employer {
+    margin: 31px 0;
+}
+
+.experience--info {
+    margin-top: 62px;
+    margin-bottom: 60px;
+}
+
+hr {
+    border: 1px solid #C1C1C1;
+    width: 798px;
+    margin: 0 auto;
+    margin-bottom: 45px;
+}
+
+#add--experience {
+    width: 289px;
+    background-color: #62A1EB;
 }
