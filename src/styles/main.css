@@ -64,17 +64,18 @@ input {
     color: rgba(0, 0, 0, 0.6);
 }
 
-input:active {
-    border: 2px solid #BCBCBC;
+input:focus, textarea:focus {
+    outline: none;
     color: #000000;
+    border: 2px solid #BCBCBC;
 }
 
-input:invalid {
-    border: 1px solid #EF5050
-}
-
-input:valid {
+input.valid, textarea.valid {
     border: 1px solid #98E37E;
+}
+
+input.invalid, textarea.invalid {
+    border: 1px solid #EF5050;
 }
 
 textarea {
@@ -85,6 +86,8 @@ textarea {
     padding-top: 13px;
     padding-left: 16px;
     border-radius: 4px;
+    font-size: 16px;
+    line-height: 22px;
 
 }
 
