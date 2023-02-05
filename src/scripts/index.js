@@ -15,6 +15,9 @@ const aboutMeInput = document.getElementById('about_me')
 const emailInput = document.getElementById('email')
 const numberInput = document.getElementById('phone_number')
 
+const form = document.querySelector('form');
+const formElements = form.elements;
+
 function validateInput(input, regex) {
     let value =  input.value.match(regex)
     
@@ -57,7 +60,6 @@ function validateFirstPage() {
     let inputs = [nameInput, surnameInput, aboutMeInput, emailInput, numberInput, fileInput]
   
     inputs.forEach(input => {
-        console.log(input, input.dataset.regex);
         if (input.type === 'file') {
             isFormValid = isFormValid && checkForFileUpload(input)
         } else {
@@ -104,6 +106,9 @@ const infoColumn = document.getElementById('resume--div').querySelector('.first-
 const imageColumn = document.getElementById('resume--div').querySelector('.resume--photo')
 
 function updateName() {
+    if(localStorage.getItem('name') && localStorage.getItem('surname')) {
+        infoColumn.querySelector('.resume--fullname').innerHTML = `${nameInput.value + ' ' + surnameInput.value}`
+    }
     infoColumn.querySelector('.resume--fullname').innerHTML = `${nameInput.value + ' ' + surnameInput.value}`
 }
 
@@ -133,4 +138,75 @@ function updateResumeImg() {
     });
   
     reader.readAsDataURL(file);
+}
+
+
+// STORING INPUT DATA IN LOCALSTORAGE
+
+for (let i = 0; i < formElements.length; i++) {
+    let element = formElements[i];
+    if (element.name) {
+        element.addEventListener('input', function() {
+            localStorage.setItem('formData', JSON.stringify(getFormData()));
+        });
+    }
+}
+
+
+// Retrieve form data from local storage and populate the form fields when the page is loaded
+window.addEventListener('load', function() {
+    let formData = JSON.parse(localStorage.getItem('formData'));
+    if (formData) {
+        populateForm(formData);
+        populateResume(formData)
+    }
+});
+
+
+// Helper function to get the form data as an object
+function getFormData() {
+    let formData = {};
+    for (let i = 0; i < formElements.length; i++) {
+        
+        let element = formElements[i];
+        if (element.name) {
+            formData[element.name] = element.value;
+        }
+    }
+    return formData;
+}
+
+// Helper function to populate the form fields with data
+function populateForm(formData) {
+
+    for (let key in formData) {
+        let element = document.getElementsByName(key)[0];
+        if(!(element.tagName === 'INPUT' && element.type === 'file')) {
+            if(!(element.tagName === 'SELECT')) {
+                element.value = Number(formData[key]);
+            }
+            element.value = formData[key];
+        }
+    }
+}
+
+function populateResume(formData) {
+
+    infoColumn.innerHTML = `
+            <h1 class="resume--fullname">${formData.name} ${formData.surname}</h1>
+            <div class="resume--contact">
+                <div><i class="fa-solid fa-at"></i> <p class="resume--contact--info">${formData.email}</p></div>
+                <div><i class="fa-solid fa-phone"></i> <p class="resume--contact--info">${formData.phone_number}</p></div>
+            </div>
+
+            <div class="resume--about">
+                <h2 class="resume--about--header">
+                    ᲩᲔᲛ ᲨᲔᲡᲐᲮᲔᲑ
+                </h2>
+
+                <p class="resume--about--info">
+                ${formData.about_me}
+                </p>
+            </div>
+    `
 }
