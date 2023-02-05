@@ -79,7 +79,12 @@ showTab(currentTab)
 function showTab(n) {
     pages[n].style.display = 'block'
     document.getElementById("prevBtn").style.visibility = (n === 0) ? 'hidden' : 'visible'
-
+    document.querySelector('.nav__span').innerHTML = `${n+1}/${pages.length}`
+    if(n === 1) {
+        document.querySelector('.survey__title').innerHTML = 'გამოცდილება'
+    } else if (n === 2) {
+        document.querySelector('.survey__title').innerHTML = 'განათლება'
+    }
     if (n === (pages.length - 1)) {
         document.getElementById("nextBtn").innerHTML = 'ᲓᲐᲡᲠᲣᲚᲔᲑᲐ'
         document.getElementById("nextBtn").type = 'submit'
