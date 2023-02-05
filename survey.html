@@ -24,13 +24,13 @@
                 <div class="input-groups__names">
                     <div class="input--group">
                         <label class="input-group__label" for="name">სახელი</label>
-                        <input class="input-group__input" type="text" name="name" id="name" placeholder="თეკლა">
+                        <input class="input-group__input" type="text" name="name" id="name" placeholder="თეკლა" data-regex="^[ა-ჰ]{2,}$">
                         <span class="input-group__span">მინიმუმ 2 ასო, ქართული ასოები</span>
                     </div>
 
                     <div class="input--group">
                         <label class="input-group__label" for="surname">გვარი</label>
-                        <input class="input-group__input" type="text" name="surname" id="surname" placeholder="ინაშვილი">
+                        <input class="input-group__input" type="text" name="surname" id="surname" placeholder="ინაშვილი" data-regex="^[ა-ჰ]{2,}$">
                         <span class="input-group__span">მინიმუმ 2 ასო, ქართული ასოები</span>
                     </div>
                 </div> 
@@ -45,35 +45,51 @@
 
                 <div class="input--group">
                     <label class="input-group__label" for="about_me">ჩემ შესახებ (არასავალდებულო)</label>
-                    <textarea name="about_me" id="about_me"  placeholder="ზოგადი ინფო შენ შესახებ"></textarea>
+                    <textarea name="about_me" id="about_me"  placeholder="ზოგადი ინფო შენ შესახებ" data-regex=".*"></textarea>
                 </div>
 
                 <div class="input--group email">
                     <label class="input-group__label" for="email">ელ.ფოსტა</label>
-                    <input class="input-group__input" type="email" name="email" id="email" placeholder="tekla.inashvili@redberry.ge">
+                    <input class="input-group__input" type="email" name="email" id="email" placeholder="tekla.inashvili@redberry.ge" data-regex="^.*@redberry\.ge$">
                     <span class="input-group__span">უნდა მთავრდებოდეს @redberry.ge-ით</span>
                 </div>
 
                 <div class="input--group">
                     <label class="input-group__label" for="phone_number">მობილურის ნომერი</label>
-                    <input class="input-group__input" type="text" name="phone_number" id="phone_number" placeholder="+995 551 12 34 56">
+                    <input class="input-group__input" type="text" name="phone_number" id="phone_number" placeholder="+995 551 12 34 56" data-regex="^(\+995\s?)?\d{3}\s?\d{3}\s?\d{3}$">
                     <span class="input-group__span">უნდა აკმაყოფილებდეს ქართული მობილურის ნომრის ფორმატს</span>
                 </div>
+            </section>
+
+            <section class="tab" style="display: none;">
+                <h1>second tab!!!</h1>
             </section>
         </form>
 
 
         <div class="survey--nav">
-            <button type="button" id="prevBtn" class="nav--button nav--previous">უკან</button>
-            <button type="button" id="nextBtn" class="nav--button nav--next">შემდეგი</button>
+            <button type="button" id="prevBtn" class="nav--button nav--previous" onclick="nextPrev(-1)">უკან</button>
+            <button type="button" id="nextBtn" class="nav--button nav--next" onclick="nextPrev(1)">შემდეგი</button>
         </div>
     </div>
 
-    <div class="resume">
-        <img 
-        class="logo--small"
-        src="./src/images/redberry-logo-small.png">
+    <div class="resume" id="resume--div">
+        <div class="first--col">
+            <h1 class="resume--fullname"></h1>
+            <div class="resume--contact">
+
+            </div>
+
+            <div class="resume--about">
+
+            </div>
+        </div>
+
+        <div class="resume--photo">
+           
+        </div>
     </div>
+    <img class="logo--small" src="./src/images/redberry-logo-small.png">  
 
     <script src="./src/scripts/index.js"></script>
 </body>  

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/b51b7dd055.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+
+    <style>
+
+        .resume {
+            display: flex;
+            width: 678px;
+            margin: 0 auto;
+        }
+
+        .first--col {
+            width: 432px;
+        }
+
+        .resume--contact div {
+            display: flex;
+            align-items: center;
+            gap: 11.67px;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 21px;
+            color: #1A1A1A;
+        }
+
+        .resume--contact {
+            display: flex;
+            flex-direction: column;
+        }
+        .resume--fullname {
+            font-weight: 700;
+            font-size: 34px;
+            line-height: 42px;
+            color: #F93B1D;
+        }
+
+        .resume--about--header {
+            font-weight: 700;
+            font-size: 18px;
+            line-height: 22px;
+            color: #F93B1D;
+        }
+
+        .resume--about--info {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 22px;
+        }
+
+        .resume--image {
+            width: 246px;
+            height: 246px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- <form action="">
+        <div class="input-groups__names">
+            <div class="input--group">
+                <label class="input-group__label" for="name">სახელი</label>
+                <input class="input-group__input" type="text" name="name" id="name" placeholder="თეკლა" data-regex="^[ა-ჰ]{2,}$">
+                <span class="input-group__span">მინიმუმ 2 ასო, ქართული ასოები</span>
+            </div>
+
+            <div class="input--group">
+                <label class="input-group__label" for="surname">გვარი</label>
+                <input class="input-group__input" type="text" name="surname" id="surname" placeholder="ინაშვილი" data-regex="^[ა-ჰ]{2,}$">
+                <span class="input-group__span">მინიმუმ 2 ასო, ქართული ასოები</span>
+            </div>
+        </div> 
+
+        <button>submit</button>
+    </form>
+
+    <h1 class="full name"></h1> -->
+    
+    <div class="resume">
+        <div class="first--col">
+            <h1 class="resume--fullname">tekla inashvili</h1>
+            <div class="resume--contact">
+                <div><i class="fa-solid fa-at"></i> <p class="resume--contact--info">tekla.inashvili.1@btu.edu.ge</p></div>
+                <div><i class="fa-solid fa-phone"></i> <p class="resume--contact--info">599400472</p></div>
+            </div>
+
+            <div class="resume--about">
+                <h2 class="resume--about--header">
+                    ᲩᲔᲛ ᲨᲔᲡᲐᲮᲔᲑ
+                </h2>
+
+                <p class="resume--about--info">
+                    ძალიან მიყვარს დიზაინის კეთება. დილით ადრე რომ ავდგები გამამხნევებელი ვარჯიშების მაგიერ დიზაინს ვაკეთებ
+                </p>
+            </div>
+        </div>
+
+        <div class="resume--photo">
+            <img class="resume--image" src="./src/images/redberry-logo-main.png">
+        </div>
+    </div>
+
+    <script>
+        const nameInput = document.querySelector('#name');
+        const surnameInput = document.querySelector('#surname');
+        const fullName = document.querySelector('.full.name');
+
+        nameInput.addEventListener('input', updateFullName);
+        surnameInput.addEventListener('input', updateFullName);
+
+        function updateFullName() {
+        fullName.textContent = `${nameInput.value} ${surnameInput.value}`;
+        }
+
+    </script>
+</body>
+</html>

@@ -88,7 +88,14 @@ textarea {
     border-radius: 4px;
     font-size: 16px;
     line-height: 22px;
+}
 
+/* overwriting -internal-autofill */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
 
 /* LANDING PAGE */
@@ -249,15 +256,73 @@ input[name="name"], input[name="surname"] {
 }
 
 /* RESUME */
-.resume {
-    height: 100vh;
-    width: 822px;
-    position: relative;
-    background-color: white;
-}
 
 .logo--small {
     position: absolute;
     bottom: 44px;
-    left: 78px;
+    right: 702px;
+}
+
+.resume {
+    width: 678px;
+    /* margin: 0 auto; */
+}
+
+.resume {
+    height: 100vh;
+    display: flex;
+    width: 822px;
+    position: relative;
+    background-color: white;
+    padding-left: 80px;
+    padding-top: 68px;
+}
+
+.first--col {
+    width: 432px;
+}
+
+.resume--contact div {
+    display: flex;
+    align-items: center;
+    gap: 11.67px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 21px;
+    color: #1A1A1A;
+}
+
+.resume--contact {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.resume--fullname {
+    font-weight: 700;
+    font-size: 34px;
+    line-height: 42px;
+    color: #F93B1D;
+    margin-bottom: 17px;
+}
+
+.resume--about--header {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    color: #F93B1D;
+    margin-top: 34px;
+    margin-bottom: 15px;
+}
+
+.resume--about--info {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    
+}
+
+.resume--image {
+    width: 246px;
+    height: 246px;
+    border-radius: 50%;
 }
