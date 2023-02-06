@@ -212,7 +212,7 @@ input:-webkit-autofill:active{
     color: #000000;
 }
 
-label[for="file-upload"] {
+label[for="image"] {
     width: 107px; 
     height: 27px; 
     background: #0E80BF;
@@ -345,7 +345,7 @@ hr {
     margin-bottom: 45px;
 }
 
-#add--experience {
+#add--experience, #add--education {
     width: 289px;
     background-color: #62A1EB;
 }

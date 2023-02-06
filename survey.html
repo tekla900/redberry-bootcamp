@@ -37,9 +37,9 @@
 
                 <div class="input--groups__file">
                     <p class="input-group__label">პირადი ფოტოს ატვირთვა</p>
-                    <label for="file-upload">
+                    <label for="image">
                         ატვირთვა
-                        <input id="file-upload" type="file" style="display: none;">
+                        <input id="image" type="file" name="image" style="display: none;">
                     </label>                      
                 </div>
 
@@ -98,7 +98,36 @@
                 <button type="button" id="add--experience">მეტი გამოცდილების დამატება</button>
             </section>
 
-            <section class="tab" style="display: none;"></section>
+            <section class="education tab" style="display: none;">
+                <div class="input--group ">
+                    <label class="input-group__label" for="institute">სასწავლებელი</label>
+                    <input class="input-group__input" type="text" name="institute" id="institute" placeholder="თანამდებობა" data-regex="^.{2,}$">
+                    <span class="input-group__span">მინიმუმ 2 სიმბოლო</span>
+                </div>
+
+                <div class="input-groups__names">
+                    <div class="input--group">
+                        <label for="degree">ხარისხი</label>
+                        <select name="degree" id="degree">
+                            <option value="0" disabled>აირჩიეთ ხარისხი</option>
+                        </select>
+                    </div>
+                    
+                    <div class="input--group">
+                        <label for="due_date_edu">დამთავრების რიცხვი</label>
+                        <input type="date" id="due_date_edu" name="due_date"
+                        value="mm/dd/yyyy" min="1900-01-01">
+                    </div>    
+                </div>
+
+                <div class="input--group">
+                    <label class="input-group__label" for="description_edu">აღწერა</label>
+                    <textarea name="description" id="description_edu"  placeholder="როლი თანამდებობაზე და ზოგადი აღწერა" data-regex="^.+$"></textarea>
+                </div>
+
+                <button type="button" id="add--education">სხვა სასწავლებლის დამატება</button>
+
+            </section>
         </form>
 
 
