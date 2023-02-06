@@ -34,29 +34,8 @@ const inputsThirdPage = [instituteInput, degreeSelect, dueDateEdu, descriptionEd
 const form = document.querySelector('form')
 const formElements = form.elements
 
-function validateInput(input, regex) {
-    let value =  input.value.match(regex)
-    
-    if (value) {
-        input.classList.add('valid')
-        input.classList.remove('invalid')
-        return true
-    } else {
-        input.classList.add('invalid')
-        input.classList.remove('valid')
-        return false
-    }
-}
 
-function validatePage(inputs) {
-    return inputs.every(input => {
-    return input.type === 'file' ? checkForFileUpload(input) : validateInput(input, input.dataset.regex)
-    })
-}
-
-function checkForFileUpload(input) {
-    return input.files.length > 0
-}
+// EVENT LISTENERS
 
 nameInput.addEventListener('blur', () => validateInput(nameInput, nameInput.dataset.regex))
 nameInput.addEventListener('input', updateName)
@@ -89,8 +68,6 @@ dueDate.addEventListener('input', updateDates)
 description.addEventListener('blur', () => validateInput(description, description.dataset.regex))
 description.addEventListener('input', updateDescription)
 
-// const inputsThirdPage = [instituteInput, degreeSelect, dueDateEdu, descriptionEdu]
-
 instituteInput.addEventListener('blur', () => validateInput(instituteInput, instituteInput.dataset.regex))
 instituteInput.addEventListener('input', updateInstitute)
 
@@ -106,6 +83,43 @@ descriptionEdu.addEventListener('input', updateDescriptionEdu)
 
 // fileInput.addEventListener('change', () => checkForFileUpload(fileInput))
 fileInput.addEventListener('change', updateResumeImg)
+
+// FETCHING DATA FOR DEGREES
+fetch('https://resume.redberryinternship.ge/api/degrees')
+.then(res => res.json())
+.then(res => {
+    res.forEach(el => {
+        const option = document.createElement('option')
+        option.value = el.id
+        option.text = el.title
+        degreeSelect.appendChild(option)
+    });
+})
+
+// VALIDATION
+function validateInput(input, regex) {
+    let value =  input.value.match(regex)
+    
+    if (value) {
+        input.classList.add('valid')
+        input.classList.remove('invalid')
+        return true
+    } else {
+        input.classList.add('invalid')
+        input.classList.remove('valid')
+        return false
+    }
+}
+
+function validatePage(inputs) {
+    return inputs.every(input => {
+    return input.type === 'file' ? checkForFileUpload(input) : validateInput(input, input.dataset.regex)
+    })
+}
+
+function checkForFileUpload(input) {
+    return input.files.length > 0
+}
 
 
 // NAVIGATION
@@ -189,9 +203,11 @@ function updateExperience() {
 }
 
 function updateInstitute() {
+    let selectedOption = degreeSelect.options[degreeSelect.selectedIndex]
+
     education.querySelector('.resume--experience').innerHTML = `
     <h2 class="resume--about--header">ᲒᲐᲜᲐᲗᲚᲔᲑᲐ</h2>
-    <p class='resume--position'>${instituteInput.value}, ${degreeSelect.value}</p>
+    <p class='resume--position'>${instituteInput.value}, ${selectedOption.textContent}</p>
     `
 }
 
@@ -225,7 +241,7 @@ function updateResumeImg() {
     reader.readAsDataURL(file)
 }
 
-
+// LOCAL STORAGE
 // STORING INPUT DATA IN LOCALSTORAGE
 
 for (let i = 0; i < formElements.length; i++) {
@@ -306,6 +322,7 @@ function populateResume(formData) {
     if (formData.description) experience.querySelector('.resume--description').innerHTML = formData.description
   
 }
+
 
 // ADDING EXPERIENCES
 
