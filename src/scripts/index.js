@@ -15,8 +15,14 @@ const aboutMeInput = document.getElementById('about_me')
 const emailInput = document.getElementById('email')
 const numberInput = document.getElementById('phone_number')
 
-const form = document.querySelector('form');
-const formElements = form.elements;
+const positionInput = document.getElementById('position')
+const employerInput = document.getElementById('employer')
+const startDate = document.getElementById('start_date')
+const dueDate = document.getElementById('due_date')
+const description = document.getElementById('description')
+
+const form = document.querySelector('form')
+const formElements = form.elements
 
 function validateInput(input, regex) {
     let value =  input.value.match(regex)
@@ -51,27 +57,48 @@ emailInput.addEventListener('input', updateEmail)
 numberInput.addEventListener('blur',  () => validateInput(numberInput, numberInput.dataset.regex))
 numberInput.addEventListener('input', updateEmail)
 
+
+positionInput.addEventListener('blur', () => validateInput(positionInput, positionInput.dataset.regex))
+
+employerInput.addEventListener('blur', () => validateInput(employerInput, employerInput.dataset.regex))
+
+startDate.addEventListener('blur', () => validateInput(startDate, startDate.dataset.regex))
+
+dueDate.addEventListener('blur', () => validateInput(dueDate, dueDate.dataset.regex))
+
+description.addEventListener('blur', () => validateInput(description, description.dataset.regex))
+
 // fileInput.addEventListener('change', () => checkForFileUpload(fileInput))
 fileInput.addEventListener('change', updateResumeImg)
 
-function validateFirstPage() {
+function validatePage(inputsArr) {
     let isFormValid = true
 
-    let inputs = [nameInput, surnameInput, aboutMeInput, emailInput, numberInput, fileInput]
-  
-    inputs.forEach(input => {
+    inputsArr.forEach(input => {
         if (input.type === 'file') {
             isFormValid = isFormValid && checkForFileUpload(input)
         } else {
             isFormValid = isFormValid && validateInput(input, input.dataset.regex)
         }
-    });
-    
+    })
+
     return isFormValid
+}
+
+function validateFirstPage() {
+    let inputs = [nameInput, surnameInput, aboutMeInput, emailInput, numberInput, fileInput]
+  
+    return validatePage(inputs)
+}
+
+function validateSecPage() {
+    let inputs = [positionInput, employerInput, startDate, dueDate, description]
+
+    return validatePage(inputs)
 }
   
 // NAVIGATION
-let currentTab = 0;
+let currentTab = 0
 const pages = document.getElementsByClassName('tab')
 
 showTab(currentTab)
@@ -91,9 +118,16 @@ function showTab(n) {
     }
 }
 
-
 function nextPrev(n) {
-    if (n === 1 && !validateFirstPage()) return false
+    if(currentTab == 0) {
+        if (n === 1 && !validateFirstPage()) {
+            return false
+        }
+        } else if(currentTab == 1){
+        if (n === 1 && !validateSecPage()) {
+            return false
+        }
+    }
     
     pages[currentTab].style.display = "none"
     currentTab += n
@@ -105,6 +139,7 @@ function nextPrev(n) {
     
     showTab(currentTab)
 }
+
 
 // UPDATE RESUME
 const infoColumn = document.getElementById('resume--div').querySelector('.first--col')
@@ -132,65 +167,65 @@ function updateEmail() {
 
 
 function updateResumeImg() {
-    const file = this.files[0];
-    const reader = new FileReader();
+    const file = this.files[0]
+    const reader = new FileReader()
   
     reader.addEventListener("load", function() {
-      const img = new Image();
-      img.src = reader.result;
+      const img = new Image()
+      img.src = reader.result
 
       imageColumn.innerHTML = `<img src=${reader.result} class='resume--image'>`
-    });
+    })
   
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(file)
 }
 
 
 // STORING INPUT DATA IN LOCALSTORAGE
 
 for (let i = 0; i < formElements.length; i++) {
-    let element = formElements[i];
+    let element = formElements[i]
     if (element.name) {
         element.addEventListener('input', function() {
-            localStorage.setItem('formData', JSON.stringify(getFormData()));
-        });
+            localStorage.setItem('formData', JSON.stringify(getFormData()))
+        })
     }
 }
 
 
 // Retrieve form data from local storage and populate the form fields when the page is loaded
 window.addEventListener('load', function() {
-    let formData = JSON.parse(localStorage.getItem('formData'));
+    let formData = JSON.parse(localStorage.getItem('formData'))
     if (formData) {
-        populateForm(formData);
+        populateForm(formData)
         populateResume(formData)
     }
-});
+})
 
 
 // Helper function to get the form data as an object
 function getFormData() {
-    let formData = {};
+    let formData = {}
     for (let i = 0; i < formElements.length; i++) {
         
-        let element = formElements[i];
+        let element = formElements[i]
         if (element.name) {
-            formData[element.name] = element.value;
+            formData[element.name] = element.value
         }
     }
-    return formData;
+    return formData
 }
 
 // Helper function to populate the form fields with data
 function populateForm(formData) {
 
     for (let key in formData) {
-        let element = document.getElementsByName(key)[0];
+        let element = document.getElementsByName(key)[0]
         if(!(element.tagName === 'INPUT' && element.type === 'file')) {
             if(!(element.tagName === 'SELECT')) {
-                element.value = Number(formData[key]);
+                element.value = Number(formData[key])
             }
-            element.value = formData[key];
+            element.value = formData[key]
         }
     }
 }
@@ -218,10 +253,10 @@ function populateResume(formData) {
 
 // ADDING EXPERIENCES
 
-let addBtn = document.getElementById("add--experience");
+let addBtn = document.getElementById("add--experience")
 
 addBtn.addEventListener("click", function() {
-  let section = document.querySelector(".experience");
+  let section = document.querySelector(".experience")
   
   section.innerHTML += `
     <div class="input--group ">
@@ -256,5 +291,5 @@ addBtn.addEventListener("click", function() {
     </div>
 
     <hr>
-  `;
-});
+  `
+})
