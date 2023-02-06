@@ -7,6 +7,7 @@ function goToLanding() {
     localStorage.clear()
 }
 
+
 const nameInput = document.getElementById('name')
 const surnameInput = document.getElementById('surname')
 const fileInput = document.getElementById('image')
@@ -112,14 +113,13 @@ function showTab(n) {
     document.getElementById("prevBtn").style.visibility = (n === 0) ? 'hidden' : 'visible'
     document.querySelector('.nav__span').innerHTML = `${n+1}/${pages.length}`
     const titles = ['ზოგადი ინფო', 'გამოცდილება', 'განათლება'];
-    document.querySelector('.survey__title').innerHTML = titles[n ];
+    document.querySelector('.survey__title').innerHTML = titles[n];
 
     if (n === (pages.length - 1)) {
         document.getElementById("nextBtn").innerHTML = 'ᲓᲐᲡᲠᲣᲚᲔᲑᲐ'
         document.getElementById("nextBtn").type = 'submit'
     }
 }
-
 
 function nextPrev(n) {
     if(currentTab == 0) {
@@ -187,16 +187,12 @@ function updateDescription() {
 function updateResumeImg() {
     const file = this.files[0]
     const reader = new FileReader()
+  
     reader.addEventListener("load", function() {
-        const img = new Image()
-        img.src = reader.result
-        localStorage.setItem("image", reader.result);
+      const img = new Image()
+      img.src = reader.result
 
-        let formData = JSON.parse(localStorage.getItem("formData")) || {}
-        formData.image = reader.result;
-        localStorage.setItem("formData", JSON.stringify(formData));
-
-        imageColumn.innerHTML = `<img src=${reader.result} class='resume--image'>`
+      imageColumn.innerHTML = `<img src=${reader.result} class='resume--image'>`
     })
   
     reader.readAsDataURL(file)
@@ -207,8 +203,7 @@ function updateResumeImg() {
 
 for (let i = 0; i < formElements.length; i++) {
     let element = formElements[i]
-    if (element.name && element.name !== 'image') {
-
+    if (element.name) {
         element.addEventListener('input', function() {
             localStorage.setItem('formData', JSON.stringify(getFormData()))
         })
@@ -219,32 +214,12 @@ for (let i = 0; i < formElements.length; i++) {
 // Retrieve form data from local storage and populate the form fields when the page is loaded
 window.addEventListener('load', function() {
     let formData = JSON.parse(localStorage.getItem('formData'))
-    let imageData = localStorage.getItem('image')
     if (formData) {
-        console.log(formData);
         populateForm(formData)
         populateResume(formData)
     }
-    if(imageData) {
-        populateImg()
-        populateResumeImg(imageData)
-    }
 })
 
-function populateImg() {
-    let element = document.getElementsByName('image')[0]
-    const savedImage = localStorage.getItem('image');
-    if (savedImage) {
-      element.src = savedImage;
-    }
-}
-
-function populateResumeImg(imageData) {
-    let img = new Image();
-    img.src = imageData;
-    imageColumn.innerHTML = `<img src=${img.src} class='resume--image'>`
-
-}
 
 // Helper function to get the form data as an object
 function getFormData() {
@@ -259,8 +234,6 @@ function getFormData() {
     return formData
 }
 
-
-
 // Helper function to populate the form fields with data
 function populateForm(formData) {
 
@@ -271,13 +244,11 @@ function populateForm(formData) {
                 element.value = Number(formData[key])
             }
             element.value = formData[key]
-        } 
+        }
     }
 }
 
-
 function populateResume(formData) {
-    
 
     infoColumn.innerHTML = `
             <h1 class="resume--fullname">${formData.name} ${formData.surname}</h1>
@@ -296,7 +267,6 @@ function populateResume(formData) {
                 </p>
             </div>
     `
-
 
     experience.innerHTML = `
         <div class="resume--experience">
@@ -318,37 +288,35 @@ addBtn.addEventListener("click", function() {
   section.innerHTML += `
     <div class="input--group ">
         <label class="input-group__label" for="position">თანამდებობა</label>
-        <input class="input-group__input" type="text" name="position" id="position_1" placeholder="თანამდებობა" data-regex="^.{2,}$">
+        <input class="input-group__input" type="text" name="position" id="position" placeholder="თანამდებობა" data-regex="^.{2,}$">
         <span class="input-group__span">მინიმუმ 2 სიმბოლო</span>
     </div>
 
     <div class="input--group employer">
         <label class="input-group__label" for="employer">დამსაქმებელი</label>
-        <input class="input-group__input" type="text" name="employer" id="employer_1" placeholder="დამსაქმებელი" data-regex="^.{2,}$">
+        <input class="input-group__input" type="text" name="employer" id="employer" placeholder="დამსაქმებელი" data-regex="^.{2,}$">
         <span class="input-group__span">მინიმუმ 2 სიმბოლო</span>
     </div>
 
     <div class="input-groups__names">
         <div class="input--group">
             <label for="start_date">დაწყების რიცხვი</label>
-            <input type="date" id="start_date_1" name="start_date"
+            <input type="date" id="start_date" name="start_date"
             value="mm/dd/yyyy" min="1900-01-01">
         </div>
         
         <div class="input--group">
             <label for="due_date">დამთავრების რიცხვი</label>
-            <input type="date" id="due_date_1" name="due_date"
+            <input type="date" id="due_date" name="due_date"
             value="mm/dd/yyyy" min="1900-01-01">
         </div>
     </div>
 
     <div class="input--group experience--info">
         <label class="input-group__label" for="description">აღწერა</label>
-        <textarea name="description" id="description_1"  placeholder="როლი თანამდებობაზე და ზოგადი აღწერა" data-regex="^.+$"></textarea>
+        <textarea name="description" id="description"  placeholder="როლი თანამდებობაზე და ზოგადი აღწერა" data-regex="^.+$"></textarea>
     </div>
 
     <hr>
   `
-
-  
 })
