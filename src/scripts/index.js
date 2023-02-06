@@ -21,6 +21,9 @@ const startDate = document.getElementById('start_date')
 const dueDate = document.getElementById('due_date')
 const description = document.getElementById('description')
 
+const inputsFirstPage = [nameInput, surnameInput, aboutMeInput, emailInput, numberInput, fileInput]
+const inputsSecPage = [positionInput, employerInput, startDate, dueDate, description]
+
 const form = document.querySelector('form')
 const formElements = form.elements
 
@@ -36,6 +39,12 @@ function validateInput(input, regex) {
         input.classList.remove('valid')
         return false
     }
+}
+
+function validatePage(inputs) {
+    return inputs.every(input => {
+    return input.type === 'file' ? checkForFileUpload(input) : validateInput(input, input.dataset.regex)
+    })
 }
 
 function checkForFileUpload(input) {
@@ -76,32 +85,7 @@ description.addEventListener('input', updateDescription)
 // fileInput.addEventListener('change', () => checkForFileUpload(fileInput))
 fileInput.addEventListener('change', updateResumeImg)
 
-function validatePage(inputsArr) {
-    let isFormValid = true
 
-    inputsArr.forEach(input => {
-        if (input.type === 'file') {
-            isFormValid = isFormValid && checkForFileUpload(input)
-        } else {
-            isFormValid = isFormValid && validateInput(input, input.dataset.regex)
-        }
-    })
-
-    return isFormValid
-}
-
-function validateFirstPage() {
-    let inputs = [nameInput, surnameInput, aboutMeInput, emailInput, numberInput, fileInput]
-  
-    return validatePage(inputs)
-}
-
-function validateSecPage() {
-    let inputs = [positionInput, employerInput, startDate, dueDate, description]
-
-    return validatePage(inputs)
-}
-  
 // NAVIGATION
 let currentTab = 0
 const pages = document.getElementsByClassName('tab')
@@ -123,11 +107,11 @@ function showTab(n) {
 
 function nextPrev(n) {
     if(currentTab == 0) {
-        if (n === 1 && !validateFirstPage()) {
+        if (n === 1 && !validatePage(inputsFirstPage)) {
             return false
         }
         } else if(currentTab == 1){
-        if (n === 1 && !validateSecPage()) {
+        if (n === 1 && !validatePage(inputsSecPage)) {
             return false
         }
     }
@@ -250,32 +234,34 @@ function populateForm(formData) {
 
 function populateResume(formData) {
 
-    infoColumn.innerHTML = `
-            <h1 class="resume--fullname">${formData.name} ${formData.surname}</h1>
-            <div class="resume--contact">
-                <div><i class="fa-solid fa-at"></i> <p class="resume--contact--info">${formData.email}</p></div>
-                <div><i class="fa-solid fa-phone"></i> <p class="resume--contact--info">${formData.phone_number}</p></div>
-            </div>
+    if(formData.name || formData.surname) {
+        infoColumn.querySelector('.resume--fullname').innerHTML = `${formData.name} ${formData.surname}`
+    }
 
-            <div class="resume--about">
-                <h2 class="resume--about--header">
-                    ᲩᲔᲛ ᲨᲔᲡᲐᲮᲔᲑ
-                </h2>
+    if(formData.email || formData.phone_number) {
+        infoColumn.querySelector('.resume--contact').innerHTML = `
+            <div><i class="fa-solid fa-at"></i> <p class="resume--contact--info">${formData.email}</p></div>
+            <div><i class="fa-solid fa-phone"></i> <p class="resume--contact--info">${formData.phone_number}</p></div>`
+    }
 
-                <p class="resume--about--info">
-                ${formData.about_me}
-                </p>
-            </div>
-    `
-
-    experience.innerHTML = `
-        <div class="resume--experience">
+    if (formData.about_me) {
+        infoColumn.querySelector('.resume--about').innerHTML = `
+            <h2 class="resume--about--header">ᲩᲔᲛ ᲨᲔᲡᲐᲮᲔᲑ</h2>
+            <p class="resume--about--info">${formData.about_me}</p>`
+    }
+  
+    if (formData.position || formData.employer) {
+        experience.querySelector('.resume--experience').innerHTML = `
             <h2 class="resume--about--header">გამოცდილება</h2>
-            <p class='resume--position'>${formData.position}, ${formData.employer}</p>
-        </div>
-        <p class='resume--dates'>${formData.start_date} - ${formData.due_date}</p>
-        <p class="resume--description">${formData.description}</p>
-    `
+            <p class='resume--position'>${formData.position}, ${formData.employer}</p>`
+    }
+
+    if (formData.start_date || formData.due_date) {
+        experience.querySelector('.resume--dates').innerHTML = `${formData.start_date} - ${formData.due_date}`
+    }
+
+    if (formData.description) experience.querySelector('.resume--description').innerHTML = formData.description
+  
 }
 
 // ADDING EXPERIENCES
