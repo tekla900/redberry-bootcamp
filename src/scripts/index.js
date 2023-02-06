@@ -269,6 +269,15 @@ function populateResume(formData) {
                 </p>
             </div>
     `
+
+    experience.innerHTML = `
+        <div class="resume--experience">
+            <h2 class="resume--about--header">გამოცდილება</h2>
+            <p class='resume--position'>${formData.position}, ${formData.employer}</p>
+        </div>
+        <p class='resume--dates'>${formData.start_date} - ${formData.due_date}</p>
+        <p class="resume--description">${formData.description}</p>
+    `
 }
 
 // ADDING EXPERIENCES
