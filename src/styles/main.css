@@ -188,7 +188,7 @@ input:-webkit-autofill:active{
     color: var(--offBlack);
 }
 
-.input-groups__names {
+.input-groups__names, .input-groups__selects {
     display: flex;
     justify-content: space-between;
 }
@@ -334,8 +334,7 @@ input[name="name"], input[name="surname"], input[type="date"] {
 }
 
 .experience--info {
-    margin-top: 62px;
-    margin-bottom: 60px;
+    margin-top: 33px;
 }
 
 hr {
@@ -343,6 +342,7 @@ hr {
     width: 798px;
     margin: 0 auto;
     margin-bottom: 45px;
+    margin-top: 54px;
 }
 
 #add--experience, #add--education {
@@ -364,4 +364,24 @@ hr {
     color: #919191;
     margin-top: 7px;
     margin-bottom: 16px;
+}
+
+/* EDUCATION */
+
+select {
+    width: 371px;
+    height: 48px;
+    background: #FFFFFF;
+    border: 1px solid #BCBCBC;
+    border-radius: 4px;
+
+}
+
+.input-groups__selects {
+    margin-top: 31px;
+    margin-bottom: 34px;
+}
+
+#description_edu {
+    height: 179px;
 }

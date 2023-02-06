@@ -64,7 +64,7 @@ emailInput.addEventListener('blur',  () => validateInput(emailInput, emailInput.
 emailInput.addEventListener('input', updateEmail)
 
 numberInput.addEventListener('blur',  () => validateInput(numberInput, numberInput.dataset.regex))
-numberInput.addEventListener('input', updateEmail)
+numberInput.addEventListener('input', updateNumber)
 
 
 positionInput.addEventListener('blur', () => validateInput(positionInput, positionInput.dataset.regex))
@@ -147,8 +147,13 @@ function updateAboutMe() {
 }
 
 function updateEmail() {
-    infoColumn.querySelector('.resume--contact').innerHTML = `
+    document.querySelector('.resume--email').innerHTML = `
     <div><i class="fa-solid fa-at"></i> <p class="resume--contact--info">${emailInput.value}</p></div>
+    `
+}
+
+function updateNumber() {
+    document.querySelector('.resume--number').innerHTML = `
     <div><i class="fa-solid fa-phone"></i> <p class="resume--contact--info">${numberInput.value}</p></div>
     `
 }
