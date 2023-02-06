@@ -267,7 +267,6 @@ input[name="name"], input[name="surname"], input[type="date"] {
 
 .resume {
     width: 678px;
-    /* margin: 0 auto; */
 }
 
 .resume {
@@ -316,11 +315,10 @@ input[name="name"], input[name="surname"], input[type="date"] {
     margin-bottom: 15px;
 }
 
-.resume--about--info {
+.resume--about--info, .resume--description {
     font-weight: 400;
     font-size: 16px;
-    line-height: 22px;
-    
+    line-height: 22px;   
 }
 
 .resume--image {
@@ -329,7 +327,7 @@ input[name="name"], input[name="surname"], input[type="date"] {
     border-radius: 50%;
 }
 
-/* EXPEREICES */
+/* EXPERIENCES */
 
 .employer {
     margin: 31px 0;
@@ -350,4 +348,20 @@ hr {
 #add--experience {
     width: 289px;
     background-color: #62A1EB;
+}
+
+.resume--position {
+    font-size: 16px;
+    line-height: 20px;
+    color: var(--offBlack);
+}
+
+.resume--dates {
+    font-style: italic;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: #919191;
+    margin-top: 7px;
+    margin-bottom: 16px;
 }

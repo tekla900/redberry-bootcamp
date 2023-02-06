@@ -59,14 +59,19 @@ numberInput.addEventListener('input', updateEmail)
 
 
 positionInput.addEventListener('blur', () => validateInput(positionInput, positionInput.dataset.regex))
+positionInput.addEventListener('input', updateExperience)
 
 employerInput.addEventListener('blur', () => validateInput(employerInput, employerInput.dataset.regex))
+employerInput.addEventListener('input', updateExperience)
 
 startDate.addEventListener('blur', () => validateInput(startDate, startDate.dataset.regex))
+startDate.addEventListener('input', updateDates)
 
 dueDate.addEventListener('blur', () => validateInput(dueDate, dueDate.dataset.regex))
+dueDate.addEventListener('input', updateDates)
 
 description.addEventListener('blur', () => validateInput(description, description.dataset.regex))
+description.addEventListener('input', updateDescription)
 
 // fileInput.addEventListener('change', () => checkForFileUpload(fileInput))
 fileInput.addEventListener('change', updateResumeImg)
@@ -144,6 +149,7 @@ function nextPrev(n) {
 // UPDATE RESUME
 const infoColumn = document.getElementById('resume--div').querySelector('.first--col')
 const imageColumn = document.getElementById('resume--div').querySelector('.resume--photo')
+const experience = document.querySelector('.resume--experience--col')
 
 function updateName() {
     if(localStorage.getItem('name') && localStorage.getItem('surname')) {
@@ -165,6 +171,20 @@ function updateEmail() {
     `
 }
 
+function updateExperience() {
+    experience.querySelector('.resume--experience').innerHTML = `
+    <h2 class="resume--about--header">გამოცდილება</h2>
+    <p class='resume--position'>${positionInput.value}, ${employerInput.value}</p>
+    `
+}
+
+function updateDates() {
+    experience.querySelector('.resume--dates').innerHTML = `${startDate.value} - ${dueDate.value}`
+}
+
+function updateDescription() {
+    experience.querySelector('.resume--description').innerHTML = description.value
+}
 
 function updateResumeImg() {
     const file = this.files[0]
