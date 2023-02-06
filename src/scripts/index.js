@@ -21,8 +21,15 @@ const startDate = document.getElementById('start_date')
 const dueDate = document.getElementById('due_date')
 const description = document.getElementById('description')
 
+const instituteInput = document.getElementById('institute')
+const degreeSelect = document.getElementById('degree')
+const dueDateEdu = document.getElementById('due_date_edu')
+const descriptionEdu = document.getElementById('description_edu')
+
+
 const inputsFirstPage = [nameInput, surnameInput, aboutMeInput, emailInput, numberInput, fileInput]
 const inputsSecPage = [positionInput, employerInput, startDate, dueDate, description]
+const inputsThirdPage = [instituteInput, degreeSelect, dueDateEdu, descriptionEdu]
 
 const form = document.querySelector('form')
 const formElements = form.elements
@@ -82,6 +89,21 @@ dueDate.addEventListener('input', updateDates)
 description.addEventListener('blur', () => validateInput(description, description.dataset.regex))
 description.addEventListener('input', updateDescription)
 
+// const inputsThirdPage = [instituteInput, degreeSelect, dueDateEdu, descriptionEdu]
+
+instituteInput.addEventListener('blur', () => validateInput(instituteInput, instituteInput.dataset.regex))
+instituteInput.addEventListener('input', updateInstitute)
+
+degreeSelect.addEventListener('blur', () => validateInput(degreeSelect, degreeSelect.dataset.regex))
+degreeSelect.addEventListener('input', updateInstitute)
+
+dueDateEdu.addEventListener('blur', () => validateInput(dueDateEdu, dueDateEdu.dataset.regex))
+dueDateEdu.addEventListener('input', updateDatesEdu)
+
+descriptionEdu.addEventListener('blur', () => validateInput(descriptionEdu, descriptionEdu.dataset.regex))
+descriptionEdu.addEventListener('input', updateDescriptionEdu)
+
+
 // fileInput.addEventListener('change', () => checkForFileUpload(fileInput))
 fileInput.addEventListener('change', updateResumeImg)
 
@@ -132,6 +154,7 @@ function nextPrev(n) {
 const infoColumn = document.getElementById('resume--div').querySelector('.first--col')
 const imageColumn = document.getElementById('resume--div').querySelector('.resume--photo')
 const experience = document.querySelector('.resume--experience--col')
+const education = document.querySelector('.resume--education--col')
 
 function updateName() {
     if(localStorage.getItem('name') && localStorage.getItem('surname')) {
@@ -165,12 +188,27 @@ function updateExperience() {
     `
 }
 
+function updateInstitute() {
+    education.querySelector('.resume--experience').innerHTML = `
+    <h2 class="resume--about--header">ᲒᲐᲜᲐᲗᲚᲔᲑᲐ</h2>
+    <p class='resume--position'>${instituteInput.value}, ${degreeSelect.value}</p>
+    `
+}
+
 function updateDates() {
     experience.querySelector('.resume--dates').innerHTML = `${startDate.value} - ${dueDate.value}`
 }
 
+function updateDatesEdu() {
+    education.querySelector('.resume--dates').innerHTML = dueDateEdu.value
+}
+
 function updateDescription() {
     experience.querySelector('.resume--description').innerHTML = description.value
+}
+
+function updateDescriptionEdu() {
+    education.querySelector('.resume--description').innerHTML = descriptionEdu.value
 }
 
 function updateResumeImg() {
