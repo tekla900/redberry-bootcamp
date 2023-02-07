@@ -70,7 +70,7 @@ input:focus, textarea:focus {
     border: 2px solid #BCBCBC;
 }
 
-input.valid, textarea.valid {
+input.valid, textarea.valid, select.valid {
     border: 1px solid #98E37E;
 }
 

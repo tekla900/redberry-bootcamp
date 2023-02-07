@@ -100,6 +100,30 @@ fetch('https://resume.redberryinternship.ge/api/degrees')
 function validateInput(input, regex) {
     let value =  input.value.match(regex)
     
+    if(input.type == 'date') {
+        if (input.value == "") {
+            input.classList.add('invalid')
+            input.classList.remove('valid')
+            return false 
+        } else {
+            input.classList.add('valid')
+            input.classList.remove('invalid')
+            return true
+        }
+    }
+
+    if(input.type == 'select') {
+        if (input.value == 0) {
+            input.classList.add('invalid')
+            input.classList.remove('valid')
+            return false 
+        } else {
+            input.classList.add('valid')
+            input.classList.remove('invalid')
+            return true
+        }
+    }
+
     if (value) {
         input.classList.add('valid')
         input.classList.remove('invalid')
@@ -142,16 +166,11 @@ function showTab(n) {
 }
 
 function nextPrev(n) {
-    if(currentTab == 0) {
-        if (n === 1 && !validatePage(inputsFirstPage)) {
-            return false
-        }
-        } else if(currentTab == 1){
-        if (n === 1 && !validatePage(inputsSecPage)) {
-            return false
-        }
-    }
     
+    if (n === 1 && !validatePage(currentTab == 0 ? inputsFirstPage : inputsSecPage)) {
+        return false;
+    }
+
     pages[currentTab].style.display = "none"
     currentTab += n
     
