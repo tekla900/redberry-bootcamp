@@ -36,6 +36,7 @@ const formElements = form.elements
 
 
 // EVENT LISTENERS
+form.addEventListener('submit', handleFormSubmit);
 
 nameInput.addEventListener('blur', () => validateInput(nameInput, nameInput.dataset.regex))
 nameInput.addEventListener('input', updateName)
