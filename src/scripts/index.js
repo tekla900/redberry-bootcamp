@@ -36,7 +36,8 @@ const formElements = form.elements
 
 
 // EVENT LISTENERS
-form.addEventListener('submit', handleFormSubmit);
+// form.addEventListener('submit', handleFormSubmit) 
+form.addEventListener('submit', handleFormSubmit)
 
 nameInput.addEventListener('blur', () => validateInput(nameInput, nameInput.dataset.regex))
 nameInput.addEventListener('input', updateName)
@@ -84,6 +85,9 @@ descriptionEdu.addEventListener('input', updateDescriptionEdu)
 
 // fileInput.addEventListener('change', () => checkForFileUpload(fileInput))
 fileInput.addEventListener('change', updateResumeImg)
+// fileInput.addEventListener('change', processFileInput)
+
+
 
 // FETCHING DATA FOR DEGREES
 fetch('https://resume.redberryinternship.ge/api/degrees')
@@ -94,7 +98,7 @@ fetch('https://resume.redberryinternship.ge/api/degrees')
         option.value = el.id
         option.text = el.title
         degreeSelect.appendChild(option)
-    });
+    })
 })
 
 // VALIDATION
@@ -157,26 +161,29 @@ function showTab(n) {
     pages[n].style.display = 'block'
     document.getElementById("prevBtn").style.visibility = (n === 0) ? 'hidden' : 'visible'
     document.querySelector('.nav__span').innerHTML = `${n+1}/${pages.length}`
-    const titles = ['ზოგადი ინფო', 'გამოცდილება', 'განათლება'];
-    document.querySelector('.survey__title').innerHTML = titles[n];
+    const titles = ['ზოგადი ინფო', 'გამოცდილება', 'განათლება']
+    document.querySelector('.survey__title').innerHTML = titles[n]
 
+    console.log(`${n} / ${pages.length}`)
     if (n === (pages.length - 1)) {
+
         document.getElementById("nextBtn").innerHTML = 'ᲓᲐᲡᲠᲣᲚᲔᲑᲐ'
-        document.getElementById("nextBtn").type = 'submit'
+        // document.getElementById("nextBtn").type = 'submit'
     }
 }
 
 function nextPrev(n) {
     
     if (n === 1 && !validatePage(currentTab == 0 ? inputsFirstPage : inputsSecPage)) {
-        return false;
+        return false
     }
 
     pages[currentTab].style.display = "none"
     currentTab += n
     
     if (currentTab >= pages.length) {
-        document.getElementById("survey__form").submit()
+        document.getElementById("nextBtn").type = 'submit'
+
         return false
     }
     
@@ -261,6 +268,30 @@ function updateResumeImg() {
     reader.readAsDataURL(file)
 }
 
+function processFileInput() {
+    if (fileInput.files.length > 0) {
+      const file = fileInput.files[0]
+      const isImage = file.type.startsWith('image/')
+      if (isImage) {
+        document.querySelector("label[for='image']").classList.add('valid')
+        document.querySelector("label[for='image']").classList.remove('invalid')
+
+        // const reader = new FileReader()
+        // reader.onload = function() {
+        //   const binaryString = reader.result
+        //   return binaryString
+        // }
+        // reader.readAsBinaryString(file)
+      } else {
+        document.querySelector("label[for='image']").classList.add('invalid')
+        document.querySelector("label[for='image']").classList.remove('valid')
+
+      }
+    }
+  }
+
+
+  
 // LOCAL STORAGE
 // STORING INPUT DATA IN LOCALSTORAGE
 
@@ -340,7 +371,6 @@ function populateResume(formData) {
     }
 
     if (formData.description) experience.querySelector('.resume--description').innerHTML = formData.description
-  
 }
 
 
@@ -386,3 +416,76 @@ addBtn.addEventListener("click", function() {
     <hr>
   `
 })
+
+function readFileAsBinaryString(fileInput) {
+  return new Promise((resolve, reject) => {
+    if (fileInput.files.length > 0) {
+      // convert file to binary string
+      const reader = new FileReader()
+      reader.onload = function() {
+        const binaryString = reader.result
+        let file = new File([binaryString], 'img.jpeg', {type: 'image/jpeg'})
+        resolve(file)
+      }
+      reader.readAsBinaryString(fileInput.files[0])
+    } else {
+      reject(new Error('No file selected'))
+    }
+  })
+}
+
+// SUBMITING DATA
+async function handleFormSubmit(e) {
+    e.preventDefault()
+    const url = form.action
+    const formData = JSON.parse(localStorage.getItem('formData'))
+
+    const formattedData = {
+        'name': formData.name, 
+        'surname': formData.surname,
+        'email': formData.email,
+        'phone_number': formData.phone_number,
+        'experiences': [ {
+                'position': formData.position,
+                'employer': formData.employer,
+                'start_date': formData.start_date,
+                'due_date': formData.due_date,
+                'description': formData.description
+            }    
+        ],
+        'educations': [{
+            'institute': formData.institute,
+            'degree': formData.degree,
+            'due_date': formData.due_date_edu,
+            'description': formData.description_ed
+        }], 
+        'about_me': formData.about_me
+    }
+
+
+    readFileAsBinaryString(fileInput)
+    .then(file => {
+        formattedData.image = file
+    })
+    .catch(error => {
+        console.error(error)
+    })
+
+    console.log(formattedData)
+    
+    // try {
+    //     const response = await fetch(url, {
+    //         method: 'POST',
+    //         body: JSON.stringify(formattedData),
+    //     })
+
+    //     if (!response.ok) {
+    //         const errorMessage = await response.text()
+    //         throw new Error(errorMessage)
+    //     } else {
+    //         console.log('yay u did it')
+    //     }
+    // } catch (error) {
+    //     console.error(error)
+    // }
+}

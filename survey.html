@@ -19,7 +19,8 @@
             <span class="nav__span"></span>
         </header>
 
-        <form id="survey__form" action="https://resume.redberryinternship.ge/api/cvs" method="post">
+        <!-- <form id="survey__form" action="https://resume.redberryinternship.ge/api/cvs" method="post"> -->
+            <form id="survey__form">
             <section class="general--info tab">
                 <div class="input-groups__names">
                     <div class="input--group">
@@ -131,13 +132,14 @@
 
             </section>
 
+            <div class="survey--nav">
+                <button type="button" id="prevBtn" class="nav--button nav--previous" onclick="nextPrev(-1)">უკან</button>
+                <button type="button" id="nextBtn" class="nav--button nav--next" onclick="nextPrev(1)">შემდეგი</button>
+            </div>
         </form>
 
 
-        <div class="survey--nav">
-            <button type="button" id="prevBtn" class="nav--button nav--previous" onclick="nextPrev(-1)">უკან</button>
-            <button type="button" id="nextBtn" class="nav--button nav--next" onclick="nextPrev(1)">შემდეგი</button>
-        </div>
+        
     </div>
 
     <div class="resume" id="resume--div">
