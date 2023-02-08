@@ -36,7 +36,6 @@ const formElements = form.elements
 
 
 // EVENT LISTENERS
-// form.addEventListener('submit', handleFormSubmit) 
 form.addEventListener('submit', handleFormSubmit)
 
 nameInput.addEventListener('blur', () => validateInput(nameInput, nameInput.dataset.regex))
@@ -82,11 +81,7 @@ dueDateEdu.addEventListener('input', updateDatesEdu)
 descriptionEdu.addEventListener('blur', () => validateInput(descriptionEdu, descriptionEdu.dataset.regex))
 descriptionEdu.addEventListener('input', updateDescriptionEdu)
 
-
-// fileInput.addEventListener('change', () => checkForFileUpload(fileInput))
 fileInput.addEventListener('change', updateResumeImg)
-// fileInput.addEventListener('change', processFileInput)
-
 
 
 // FETCHING DATA FOR DEGREES
@@ -146,9 +141,10 @@ function validatePage(inputs) {
     })
 }
 
-function checkForFileUpload(input) {
-    return input.files.length > 0
-}
+// function checkForFileUpload(input) {
+//     return input.files.length > 0
+// }
+const checkForFileUpload = (input) => input.files.length > 0;
 
 
 // NAVIGATION
@@ -164,12 +160,7 @@ function showTab(n) {
     const titles = ['ზოგადი ინფო', 'გამოცდილება', 'განათლება']
     document.querySelector('.survey__title').innerHTML = titles[n]
 
-    console.log(`${n} / ${pages.length}`)
-    if (n === (pages.length - 1)) {
-
-        document.getElementById("nextBtn").innerHTML = 'ᲓᲐᲡᲠᲣᲚᲔᲑᲐ'
-        // document.getElementById("nextBtn").type = 'submit'
-    }
+    if (n === (pages.length - 1)) document.getElementById("nextBtn").innerHTML = 'ᲓᲐᲡᲠᲣᲚᲔᲑᲐ'
 }
 
 function nextPrev(n) {
@@ -268,29 +259,6 @@ function updateResumeImg() {
     reader.readAsDataURL(file)
 }
 
-function processFileInput() {
-    if (fileInput.files.length > 0) {
-      const file = fileInput.files[0]
-      const isImage = file.type.startsWith('image/')
-      if (isImage) {
-        document.querySelector("label[for='image']").classList.add('valid')
-        document.querySelector("label[for='image']").classList.remove('invalid')
-
-        // const reader = new FileReader()
-        // reader.onload = function() {
-        //   const binaryString = reader.result
-        //   return binaryString
-        // }
-        // reader.readAsBinaryString(file)
-      } else {
-        document.querySelector("label[for='image']").classList.add('invalid')
-        document.querySelector("label[for='image']").classList.remove('valid')
-
-      }
-    }
-  }
-
-
   
 // LOCAL STORAGE
 // STORING INPUT DATA IN LOCALSTORAGE
@@ -344,6 +312,7 @@ function populateForm(formData) {
 
 function populateResume(formData) {
 
+    
     if(formData.name || formData.surname) {
         infoColumn.querySelector('.resume--fullname').innerHTML = `${formData.name} ${formData.surname}`
     }
@@ -371,6 +340,18 @@ function populateResume(formData) {
     }
 
     if (formData.description) experience.querySelector('.resume--description').innerHTML = formData.description
+
+
+    if (formData.institute || formData.degree) {
+        education.querySelector('.resume--experience').innerHTML = `
+            <h2 class="resume--about--header">ᲒᲐᲜᲐᲗᲚᲔᲑᲐ</h2>
+            <p class='resume--position'>${formData.institute}, ${formData.degree}</p>
+        `
+    }  
+
+    if (formData.due_date_edu) education.querySelector('.resume--dates').innerHTML = formData.due_date_edu
+    if (formData.description_ed)  education.querySelector('.resume--description').innerHTML = formData.description_ed
+
 }
 
 
@@ -437,9 +418,12 @@ function readFileAsBinaryString(fileInput) {
 // SUBMITING DATA
 async function handleFormSubmit(e) {
     e.preventDefault()
-    const url = form.action
+    // const url = form.action
+    const url = 'https://resume.redberryinternship.ge/api/cvs'
     const formData = JSON.parse(localStorage.getItem('formData'))
+    let degree = degreeSelect.options[degreeSelect.selectedIndex]
 
+    // let degree = 
     const formattedData = {
         'name': formData.name, 
         'surname': formData.surname,
@@ -448,44 +432,50 @@ async function handleFormSubmit(e) {
         'experiences': [ {
                 'position': formData.position,
                 'employer': formData.employer,
-                'start_date': formData.start_date,
-                'due_date': formData.due_date,
+                'start_date': formData.start_date.split("-").join("/"),
+                'due_date': formData.due_date.split("-").join("/"),
                 'description': formData.description
             }    
         ],
         'educations': [{
             'institute': formData.institute,
-            'degree': formData.degree,
-            'due_date': formData.due_date_edu,
+            'degree': degree.textContent,
+            'due_date': formData.due_date_edu.split("-").join("/"),
             'description': formData.description_ed
         }], 
         'about_me': formData.about_me
     }
 
-
     readFileAsBinaryString(fileInput)
-    .then(file => {
-        formattedData.image = file
-    })
-    .catch(error => {
-        console.error(error)
-    })
-
-    console.log(formattedData)
+        .then(file => {
+            formattedData.image = file
+        })
+        .catch(error => {
+            console.error('ეს არის ფაილის წაკითხვის ერორი');
+            console.error(error)
+        })
     
-    // try {
-    //     const response = await fetch(url, {
-    //         method: 'POST',
-    //         body: JSON.stringify(formattedData),
-    //     })
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formattedData),
+            redirect: 'manual'
+        })
+        
+        if (!response.ok) {
+            console.error('ეს არის რომ პოსტ რექუესტი გაიგზვნა ოღონდ რაღაც ხარვეზით')
+            const errorMessage = await response.text()
+            throw new Error(errorMessage)
+        } else {
+            console.log('yay u did it')
+        }
 
-    //     if (!response.ok) {
-    //         const errorMessage = await response.text()
-    //         throw new Error(errorMessage)
-    //     } else {
-    //         console.log('yay u did it')
-    //     }
-    // } catch (error) {
-    //     console.error(error)
-    // }
+    } catch (error) {
+        console.error('ეს არის რომ პოსტ რექუესტი არ გაგზავნილა')
+
+        console.error(error)
+    }
 }
