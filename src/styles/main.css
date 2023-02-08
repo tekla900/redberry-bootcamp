@@ -72,6 +72,7 @@ input:focus, textarea:focus {
 
 input.valid, textarea.valid, select.valid {
     border: 1px solid #98E37E;
+    color: #000000;
 }
 
 input.invalid, textarea.invalid {
@@ -136,8 +137,8 @@ input:-webkit-autofill:active{
     margin-top: 472px;
 }
 
-/* SURVEY */
 
+/* SURVEY */
 .survey {
     width: 798px;
     margin-left: 149px; 
@@ -231,8 +232,6 @@ label[for="image"] {
     width: 798px;
 }
 
-
-/* ??? */
 input[name="name"], input[name="surname"], input[type="date"] {
     width: 371px;
 }
@@ -257,8 +256,11 @@ input[name="name"], input[name="surname"], input[type="date"] {
     margin-bottom: 29px;
 }
 
-/* RESUME */
+#description {
+    height: 123px;
+}
 
+/* RESUME */
 .logo--small {
     position: absolute;
     bottom: 44px;

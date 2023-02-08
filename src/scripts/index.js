@@ -90,7 +90,7 @@ fetch('https://resume.redberryinternship.ge/api/degrees')
 .then(res => {
     res.forEach(el => {
         const option = document.createElement('option')
-        option.value = el.id
+        option.value = el.title
         option.text = el.title
         degreeSelect.appendChild(option)
     })
@@ -98,53 +98,38 @@ fetch('https://resume.redberryinternship.ge/api/degrees')
 
 // VALIDATION
 function validateInput(input, regex) {
-    let value =  input.value.match(regex)
+    let isValid = false
     
-    if(input.type == 'date') {
-        if (input.value == "") {
-            input.classList.add('invalid')
-            input.classList.remove('valid')
-            return false 
-        } else {
-            input.classList.add('valid')
-            input.classList.remove('invalid')
-            return true
-        }
+    if (input.type === 'date') {
+        isValid = input.value !== ""
+    } else if (input.type === 'select') {
+        isValid = input.value !== 0
+    } else {
+        isValid = input.value.match(regex) !== null
     }
 
-    if(input.type == 'select') {
-        if (input.value == 0) {
-            input.classList.add('invalid')
-            input.classList.remove('valid')
-            return false 
-        } else {
-            input.classList.add('valid')
-            input.classList.remove('invalid')
-            return true
-        }
-    }
-
-    if (value) {
+    if (isValid) {
         input.classList.add('valid')
         input.classList.remove('invalid')
-        return true
     } else {
         input.classList.add('invalid')
         input.classList.remove('valid')
-        return false
     }
+
+    return isValid
 }
+
 
 function validatePage(inputs) {
     return inputs.every(input => {
-    return input.type === 'file' ? checkForFileUpload(input) : validateInput(input, input.dataset.regex)
+        return input.type === 'file' ? checkForFileUpload(input) : validateInput(input, input.dataset.regex)
     })
 }
 
 // function checkForFileUpload(input) {
 //     return input.files.length > 0
 // }
-const checkForFileUpload = (input) => input.files.length > 0;
+const checkForFileUpload = (input) => input.files.length > 0
 
 
 // NAVIGATION
@@ -163,21 +148,17 @@ function showTab(n) {
     if (n === (pages.length - 1)) document.getElementById("nextBtn").innerHTML = 'ᲓᲐᲡᲠᲣᲚᲔᲑᲐ'
 }
 
-function nextPrev(n) {
-    
-    if (n === 1 && !validatePage(currentTab == 0 ? inputsFirstPage : inputsSecPage)) {
-        return false
-    }
+function nextPrev(n) { 
+    if (n === 1 && !validatePage(currentTab == 0 ? inputsFirstPage : inputsSecPage)) { return false }
 
     pages[currentTab].style.display = "none"
     currentTab += n
-    
+
     if (currentTab >= pages.length) {
         document.getElementById("nextBtn").type = 'submit'
-
         return false
     }
-    
+
     showTab(currentTab)
 }
 
@@ -198,7 +179,8 @@ function updateName() {
 function updateAboutMe() {
     infoColumn.querySelector('.resume--about').innerHTML = `
         <h2 class="resume--about--header">ᲩᲔᲛ ᲨᲔᲡᲐᲮᲔᲑ</h2>
-        <p class="resume--about--info">${aboutMeInput.value}</p>`
+        <p class="resume--about--info">${aboutMeInput.value}</p>
+        <hr class="resume--hr">`
 }
 
 function updateEmail() {
@@ -238,11 +220,11 @@ function updateDatesEdu() {
 }
 
 function updateDescription() {
-    experience.querySelector('.resume--description').innerHTML = description.value
+    experience.querySelector('.resume--description').innerHTML = description.value + '<hr class="resume--hr">'
 }
 
 function updateDescriptionEdu() {
-    education.querySelector('.resume--description').innerHTML = descriptionEdu.value
+    education.querySelector('.resume--description').innerHTML = descriptionEdu.value + '<hr class="resume--hr">'
 }
 
 function updateResumeImg() {
@@ -298,7 +280,6 @@ function getFormData() {
 
 // Helper function to populate the form fields with data
 function populateForm(formData) {
-
     for (let key in formData) {
         let element = document.getElementsByName(key)[0]
         if(!(element.tagName === 'INPUT' && element.type === 'file')) {
@@ -310,9 +291,8 @@ function populateForm(formData) {
     }
 }
 
-function populateResume(formData) {
+async function populateResume(formData) {
 
-    
     if(formData.name || formData.surname) {
         infoColumn.querySelector('.resume--fullname').innerHTML = `${formData.name} ${formData.surname}`
     }
@@ -326,7 +306,8 @@ function populateResume(formData) {
     if (formData.about_me) {
         infoColumn.querySelector('.resume--about').innerHTML = `
             <h2 class="resume--about--header">ᲩᲔᲛ ᲨᲔᲡᲐᲮᲔᲑ</h2>
-            <p class="resume--about--info">${formData.about_me}</p>`
+            <p class="resume--about--info">${formData.about_me}</p>
+            <hr class="resume--hr">`
     }
   
     if (formData.position || formData.employer) {
@@ -339,64 +320,21 @@ function populateResume(formData) {
         experience.querySelector('.resume--dates').innerHTML = `${formData.start_date} - ${formData.due_date}`
     }
 
-    if (formData.description) experience.querySelector('.resume--description').innerHTML = formData.description
+    if (formData.description) experience.querySelector('.resume--description').innerHTML = formData.description + '<hr class="resume--hr">'
 
 
     if (formData.institute || formData.degree) {
+
         education.querySelector('.resume--experience').innerHTML = `
             <h2 class="resume--about--header">ᲒᲐᲜᲐᲗᲚᲔᲑᲐ</h2>
             <p class='resume--position'>${formData.institute}, ${formData.degree}</p>
         `
-    }  
-
+    }
     if (formData.due_date_edu) education.querySelector('.resume--dates').innerHTML = formData.due_date_edu
-    if (formData.description_ed)  education.querySelector('.resume--description').innerHTML = formData.description_ed
+    if (formData.description_ed)  education.querySelector('.resume--description').innerHTML = formData.description_ed + '<hr class="resume--hr">'
 
 }
 
-
-// ADDING EXPERIENCES
-
-let addBtn = document.getElementById("add--experience")
-
-addBtn.addEventListener("click", function() {
-  let section = document.querySelector(".experience")
-  
-  section.innerHTML += `
-    <div class="input--group ">
-        <label class="input-group__label" for="position">თანამდებობა</label>
-        <input class="input-group__input" type="text" name="position" id="position" placeholder="თანამდებობა" data-regex="^.{2,}$">
-        <span class="input-group__span">მინიმუმ 2 სიმბოლო</span>
-    </div>
-
-    <div class="input--group employer">
-        <label class="input-group__label" for="employer">დამსაქმებელი</label>
-        <input class="input-group__input" type="text" name="employer" id="employer" placeholder="დამსაქმებელი" data-regex="^.{2,}$">
-        <span class="input-group__span">მინიმუმ 2 სიმბოლო</span>
-    </div>
-
-    <div class="input-groups__names">
-        <div class="input--group">
-            <label for="start_date">დაწყების რიცხვი</label>
-            <input type="date" id="start_date" name="start_date"
-            value="mm/dd/yyyy" min="1900-01-01">
-        </div>
-        
-        <div class="input--group">
-            <label for="due_date">დამთავრების რიცხვი</label>
-            <input type="date" id="due_date" name="due_date"
-            value="mm/dd/yyyy" min="1900-01-01">
-        </div>
-    </div>
-
-    <div class="input--group experience--info">
-        <label class="input-group__label" for="description">აღწერა</label>
-        <textarea name="description" id="description"  placeholder="როლი თანამდებობაზე და ზოგადი აღწერა" data-regex="^.+$"></textarea>
-    </div>
-
-    <hr>
-  `
-})
 
 function readFileAsBinaryString(fileInput) {
   return new Promise((resolve, reject) => {
@@ -451,22 +389,16 @@ async function handleFormSubmit(e) {
             formattedData.image = file
         })
         .catch(error => {
-            console.error('ეს არის ფაილის წაკითხვის ერორი');
             console.error(error)
         })
     
     try {
         const response = await fetch(url, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
             body: JSON.stringify(formattedData),
-            redirect: 'manual'
         })
         
         if (!response.ok) {
-            console.error('ეს არის რომ პოსტ რექუესტი გაიგზვნა ოღონდ რაღაც ხარვეზით')
             const errorMessage = await response.text()
             throw new Error(errorMessage)
         } else {
@@ -474,8 +406,6 @@ async function handleFormSubmit(e) {
         }
 
     } catch (error) {
-        console.error('ეს არის რომ პოსტ რექუესტი არ გაგზავნილა')
-
         console.error(error)
     }
 }
