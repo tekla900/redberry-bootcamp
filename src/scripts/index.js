@@ -135,10 +135,7 @@ function validatePage(inputs) {
     })
 }
 
-// function checkForFileUpload(input) {
-//     return input.files.length > 0
-// }
-const checkForFileUpload = (input) => input.files.length > 0
+const checkForFileUpload = (input) => input.files.length > 0 || localStorage.getItem('image')
 
 
 // NAVIGATION
@@ -291,12 +288,19 @@ function getFormData() {
 function populateForm(formData) {
     for (let key in formData) {
         let element = document.getElementsByName(key)[0]
+        // console.log(element.type);
+
         if(!(element.tagName === 'INPUT' && element.type === 'file')) {
             if(!(element.tagName === 'SELECT')) {
                 element.value = Number(formData[key])
             }
             element.value = formData[key]
         }
+
+        // if(element.type == 'file') {
+        //     console.log(element.value);
+        //     element.value = localStorage.getItem('image')
+        // }
     }
 }
 
@@ -364,13 +368,20 @@ function readFileAsBinaryString(fileInput) {
   })
 }
 
+
+
 // SUBMITING DATA
 async function handleFormSubmit(e) {
     e.preventDefault()
     // const url = form.action
     const url = 'https://resume.redberryinternship.ge/api/cvs'
     const formData = JSON.parse(localStorage.getItem('formData'))
+    const image = localStorage.getItem('image')
+    let base64Img = image.replace('data:', '').replace(/^.+,/, '')
+    console.log({base64Img});
+    let img = await readFileAsBinaryString(fileInput)
 
+    console.log({img});
     const formattedData = {
         'name': formData.name, 
         'surname': formData.surname,
@@ -390,7 +401,8 @@ async function handleFormSubmit(e) {
             'due_date': formData.due_date_edu.split("-").join("/"),
             'description': formData.description_ed
         }], 
-        'about_me': formData.about_me
+        'about_me': formData.about_me,
+        'image': img
     }
 
     // readFileAsBinaryString(fileInput)
@@ -402,10 +414,10 @@ async function handleFormSubmit(e) {
     //         console.error(error)
     //     })
     
-    if (fileInput.files.length > 0) {
-        formattedData.image = await readFileAsBinaryString(fileInput)
-    }
-
+   
+    // if (fileInput.files.length > 0) {
+    //     let image = 
+    // }
 
     // if (fileInput.files.length > 0) {
     //     // convert file to binary string
@@ -419,9 +431,8 @@ async function handleFormSubmit(e) {
     //     reader.readAsBinaryString(fileInput.files[0])
     // }
     console.log(formattedData.image)
-
     try {
-        console.log(formattedData.image)
+        console.log(formattedData)
         const response = await fetch(url, {
             method: 'POST',
             headers: {

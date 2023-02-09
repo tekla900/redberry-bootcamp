@@ -61,6 +61,9 @@ input {
     font-weight: 400;
     line-height: 21px;
     letter-spacing: 0em;
+}
+
+input::placeholder {
     color: rgba(0, 0, 0, 0.6);
 }
 
@@ -272,7 +275,7 @@ input[name="name"], input[name="surname"], input[type="date"] {
 }
 
 .resume {
-    height: 100vh;
+    /* height: 100vh; */
     display: flex;
     width: 822px;
     position: relative;
@@ -356,6 +359,14 @@ hr {
     font-size: 16px;
     line-height: 20px;
     color: var(--offBlack);
+}
+
+.resume--photo {
+    width: 246px;
+}
+
+.resume div.first-div {
+    width: 432px;
 }
 
 .resume--dates {
