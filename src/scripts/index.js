@@ -82,7 +82,16 @@ descriptionEdu.addEventListener('blur', () => validateInput(descriptionEdu, desc
 descriptionEdu.addEventListener('input', updateDescriptionEdu)
 
 fileInput.addEventListener('change', updateResumeImg)
+fileInput.addEventListener('input', saveFile)
 
+async function saveFile(e) {
+    const image = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(image);
+    reader.addEventListener('load', () => {
+        localStorage.setItem('image', reader.result);
+    });
+}
 
 // FETCHING DATA FOR DEGREES
 fetch('https://resume.redberryinternship.ge/api/degrees')
@@ -293,6 +302,8 @@ function populateForm(formData) {
 
 async function populateResume(formData) {
 
+    if(localStorage.getItem('image')) imageColumn.innerHTML = `<img src=${localStorage.getItem('image')} class='resume--image'>`
+
     if(formData.name || formData.surname) {
         infoColumn.querySelector('.resume--fullname').innerHTML = `${formData.name} ${formData.surname}`
     }
@@ -382,18 +393,35 @@ async function handleFormSubmit(e) {
         'about_me': formData.about_me
     }
 
-    readFileAsBinaryString(fileInput)
-        .then(file => {
-            formattedData.image = file
-            console.log(formattedData.image);
-        })
-        .catch(error => {
-            console.error(error)
-        })
+    // readFileAsBinaryString(fileInput)
+    //     .then(file => {
+    //         formattedData.image = file
+    //         console.log(formattedData.image);
+    //     })
+    //     .catch(error => {
+    //         console.error(error)
+    //     })
     
+    if (fileInput.files.length > 0) {
+        formattedData.image = await readFileAsBinaryString(fileInput)
+    }
+
+
+    // if (fileInput.files.length > 0) {
+    //     // convert file to binary string
+    //     const reader = new FileReader()
+    //     reader.onload = function() {
+    //         const binaryString = reader.result
+    //         let file = new File([binaryString], 'img.jpeg', {type: 'image/jpeg'})
+    //         formattedData.image = file
+    //         console.log(formattedData.image);
+    //     };
+    //     reader.readAsBinaryString(fileInput.files[0])
+    // }
+    console.log(formattedData.image)
 
     try {
-        console.log(formattedData.image);
+        console.log(formattedData.image)
         const response = await fetch(url, {
             method: 'POST',
             headers: {
@@ -403,9 +431,12 @@ async function handleFormSubmit(e) {
             },
             body: JSON.stringify(formattedData),
         })
+
+        // console.log();
         
         if (!response.ok) {
             const errorMessage = await response.text()
+            console.error('image' in formattedData);
             throw new Error(errorMessage)
         } else {
             console.log('yay u did it')
