@@ -90,7 +90,7 @@ fetch('https://resume.redberryinternship.ge/api/degrees')
 .then(res => {
     res.forEach(el => {
         const option = document.createElement('option')
-        option.value = el.title
+        option.value = el.id
         option.text = el.title
         degreeSelect.appendChild(option)
     })
@@ -359,9 +359,7 @@ async function handleFormSubmit(e) {
     // const url = form.action
     const url = 'https://resume.redberryinternship.ge/api/cvs'
     const formData = JSON.parse(localStorage.getItem('formData'))
-    let degree = degreeSelect.options[degreeSelect.selectedIndex]
 
-    // let degree = 
     const formattedData = {
         'name': formData.name, 
         'surname': formData.surname,
@@ -377,7 +375,7 @@ async function handleFormSubmit(e) {
         ],
         'educations': [{
             'institute': formData.institute,
-            'degree': degree.textContent,
+            'degree_id': formData.degree,
             'due_date': formData.due_date_edu.split("-").join("/"),
             'description': formData.description_ed
         }], 
@@ -387,14 +385,22 @@ async function handleFormSubmit(e) {
     readFileAsBinaryString(fileInput)
         .then(file => {
             formattedData.image = file
+            console.log(formattedData.image);
         })
         .catch(error => {
             console.error(error)
         })
     
+
     try {
+        console.log(formattedData.image);
         const response = await fetch(url, {
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'Connection': 'keep-alive'
+            },
             body: JSON.stringify(formattedData),
         })
         
