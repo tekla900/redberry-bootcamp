@@ -104,6 +104,10 @@ fetch('https://resume.redberryinternship.ge/api/degrees')
 // VALIDATION
 function validateInput(input, regex) {
     let isValid = false
+
+    const checkIcon = input.nextElementSibling;
+    const warningIcon = checkIcon.nextElementSibling;
+
     
     if (input.type === 'date') {
         isValid = input.value !== ""
@@ -116,9 +120,14 @@ function validateInput(input, regex) {
     if (isValid) {
         input.classList.add('valid')
         input.classList.remove('invalid')
+        checkIcon.style.display = 'inline'
+        warningIcon.style.display = 'none'
+
     } else {
         input.classList.add('invalid')
         input.classList.remove('valid')
+        checkIcon.style.display = 'none'
+        warningIcon.style.display = 'inline'
     }
 
     return isValid

@@ -398,3 +398,26 @@ select {
 #description_edu {
     height: 179px;
 }
+
+
+.position--div {
+    position: relative;
+}
+.validation--icons {
+    position: absolute;
+    right: 14.75px;
+    top: 15.75px;
+}
+.validation--icons.outside {
+    right: -35px;
+    top: 5px;
+}
+.fa-triangle-exclamation {
+    color: #F02424;
+    display: none;
+}
+
+.fa-check-circle {
+    color: #98E37E;
+    display: none;
+}
