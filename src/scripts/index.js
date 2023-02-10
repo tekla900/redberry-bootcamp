@@ -7,7 +7,6 @@ function goToLanding() {
     localStorage.clear()
 }
 
-
 const nameInput = document.getElementById('name')
 const surnameInput = document.getElementById('surname')
 const fileInput = document.getElementById('image')
@@ -26,7 +25,6 @@ const degreeSelect = document.getElementById('degree')
 const dueDateEdu = document.getElementById('due_date_edu')
 const descriptionEdu = document.getElementById('description_edu')
 
-
 const inputsFirstPage = [nameInput, surnameInput, aboutMeInput, emailInput, numberInput, fileInput]
 const inputsSecPage = [positionInput, employerInput, startDate, dueDate, description]
 const inputsThirdPage = [instituteInput, degreeSelect, dueDateEdu, descriptionEdu]
@@ -34,63 +32,61 @@ const inputsThirdPage = [instituteInput, degreeSelect, dueDateEdu, descriptionEd
 const form = document.querySelector('form')
 const formElements = form.elements
 
-
 // EVENT LISTENERS
 form.addEventListener('submit', handleFormSubmit)
 
-nameInput.addEventListener('blur', () => validateInput(nameInput, nameInput.dataset.regex))
+nameInput.addEventListener('input', () => validateInput(nameInput, nameInput.dataset.regex))
 nameInput.addEventListener('input', updateName)
 
-surnameInput.addEventListener('blur', () => validateInput(surnameInput, surnameInput.dataset.regex))
+surnameInput.addEventListener('input', () => validateInput(surnameInput, surnameInput.dataset.regex))
 surnameInput.addEventListener('input', updateName)
 
-aboutMeInput.addEventListener('blur',  () => validateInput(aboutMeInput, aboutMeInput.dataset.regex))
+aboutMeInput.addEventListener('input',  () => validateInput(aboutMeInput, aboutMeInput.dataset.regex))
 aboutMeInput.addEventListener('input', updateAboutMe)
 
-emailInput.addEventListener('blur',  () => validateInput(emailInput, emailInput.dataset.regex))
+emailInput.addEventListener('input',  () => validateInput(emailInput, emailInput.dataset.regex))
 emailInput.addEventListener('input', updateEmail)
 
-numberInput.addEventListener('blur',  () => validateInput(numberInput, numberInput.dataset.regex))
+numberInput.addEventListener('input',  () => validateInput(numberInput, numberInput.dataset.regex))
 numberInput.addEventListener('input', updateNumber)
 
-
-positionInput.addEventListener('blur', () => validateInput(positionInput, positionInput.dataset.regex))
+positionInput.addEventListener('input', () => validateInput(positionInput, positionInput.dataset.regex))
 positionInput.addEventListener('input', updateExperience)
 
-employerInput.addEventListener('blur', () => validateInput(employerInput, employerInput.dataset.regex))
+employerInput.addEventListener('input', () => validateInput(employerInput, employerInput.dataset.regex))
 employerInput.addEventListener('input', updateExperience)
 
-startDate.addEventListener('blur', () => validateInput(startDate, startDate.dataset.regex))
+startDate.addEventListener('input', () => validateInput(startDate, startDate.dataset.regex))
 startDate.addEventListener('input', updateDates)
 
-dueDate.addEventListener('blur', () => validateInput(dueDate, dueDate.dataset.regex))
+dueDate.addEventListener('input', () => validateInput(dueDate, dueDate.dataset.regex))
 dueDate.addEventListener('input', updateDates)
 
-description.addEventListener('blur', () => validateInput(description, description.dataset.regex))
+description.addEventListener('input', () => validateInput(description, description.dataset.regex))
 description.addEventListener('input', updateDescription)
 
-instituteInput.addEventListener('blur', () => validateInput(instituteInput, instituteInput.dataset.regex))
+instituteInput.addEventListener('input', () => validateInput(instituteInput, instituteInput.dataset.regex))
 instituteInput.addEventListener('input', updateInstitute)
 
-degreeSelect.addEventListener('blur', () => validateInput(degreeSelect, degreeSelect.dataset.regex))
+degreeSelect.addEventListener('input', () => validateInput(degreeSelect, degreeSelect.dataset.regex))
 degreeSelect.addEventListener('input', updateInstitute)
 
-dueDateEdu.addEventListener('blur', () => validateInput(dueDateEdu, dueDateEdu.dataset.regex))
+dueDateEdu.addEventListener('input', () => validateInput(dueDateEdu, dueDateEdu.dataset.regex))
 dueDateEdu.addEventListener('input', updateDatesEdu)
 
-descriptionEdu.addEventListener('blur', () => validateInput(descriptionEdu, descriptionEdu.dataset.regex))
+descriptionEdu.addEventListener('input', () => validateInput(descriptionEdu, descriptionEdu.dataset.regex))
 descriptionEdu.addEventListener('input', updateDescriptionEdu)
 
 fileInput.addEventListener('change', updateResumeImg)
 fileInput.addEventListener('input', saveFile)
 
 async function saveFile(e) {
-    const image = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(image);
+    const image = e.target.files[0]
+    const reader = new FileReader()
+    reader.readAsDataURL(image)
     reader.addEventListener('load', () => {
-        localStorage.setItem('image', reader.result);
-    });
+        localStorage.setItem('image', reader.result)
+    })
 }
 
 // FETCHING DATA FOR DEGREES
@@ -128,7 +124,6 @@ function validateInput(input, regex) {
     return isValid
 }
 
-
 function validatePage(inputs) {
     return inputs.every(input => {
         return input.type === 'file' ? checkForFileUpload(input) : validateInput(input, input.dataset.regex)
@@ -136,7 +131,6 @@ function validatePage(inputs) {
 }
 
 const checkForFileUpload = (input) => input.files.length > 0 || localStorage.getItem('image')
-
 
 // NAVIGATION
 let currentTab = 0
@@ -167,7 +161,6 @@ function nextPrev(n) {
 
     showTab(currentTab)
 }
-
 
 // UPDATE RESUME
 const infoColumn = document.getElementById('resume--div').querySelector('.first--col')
@@ -260,7 +253,6 @@ for (let i = 0; i < formElements.length; i++) {
     }
 }
 
-
 // Retrieve form data from local storage and populate the form fields when the page is loaded
 window.addEventListener('load', function() {
     let formData = JSON.parse(localStorage.getItem('formData'))
@@ -269,7 +261,6 @@ window.addEventListener('load', function() {
         populateResume(formData)
     }
 })
-
 
 // Helper function to get the form data as an object
 function getFormData() {
@@ -288,7 +279,6 @@ function getFormData() {
 function populateForm(formData) {
     for (let key in formData) {
         let element = document.getElementsByName(key)[0]
-        // console.log(element.type);
 
         if(!(element.tagName === 'INPUT' && element.type === 'file')) {
             if(!(element.tagName === 'SELECT')) {
@@ -296,11 +286,6 @@ function populateForm(formData) {
             }
             element.value = formData[key]
         }
-
-        // if(element.type == 'file') {
-        //     console.log(element.value);
-        //     element.value = localStorage.getItem('image')
-        // }
     }
 }
 
@@ -337,7 +322,6 @@ async function populateResume(formData) {
 
     if (formData.description) experience.querySelector('.resume--description').innerHTML = formData.description + '<hr class="resume--hr">'
 
-
     if (formData.institute || formData.degree) {
 
         education.querySelector('.resume--experience').innerHTML = `
@@ -349,7 +333,6 @@ async function populateResume(formData) {
     if (formData.description_ed)  education.querySelector('.resume--description').innerHTML = formData.description_ed + '<hr class="resume--hr">'
 
 }
-
 
 function readFileAsBinaryString(fileInput) {
   return new Promise((resolve, reject) => {
@@ -369,85 +352,89 @@ function readFileAsBinaryString(fileInput) {
 }
 
 
-
 // SUBMITING DATA
 async function handleFormSubmit(e) {
     e.preventDefault()
+ 
+
     // const url = form.action
     const url = 'https://resume.redberryinternship.ge/api/cvs'
-    const formData = JSON.parse(localStorage.getItem('formData'))
-    const image = localStorage.getItem('image')
-    let base64Img = image.replace('data:', '').replace(/^.+,/, '')
-    console.log({base64Img});
-    let img = await readFileAsBinaryString(fileInput)
+    const localStorageData = JSON.parse(localStorage.getItem('formData'))
+    const imageUrl = localStorage.getItem('image')
+    // let base64Img = imageUrl.replace('data:', '').replace(/^.+,/, '')
+    // console.log({base64Img})
+    // let img = await readFileAsBinaryString(fileInput)
+    const file = await fetch(imageUrl)
+      .then(res => res.blob())
 
-    console.log({img});
-    const formattedData = {
-        'name': formData.name, 
-        'surname': formData.surname,
-        'email': formData.email,
-        'phone_number': formData.phone_number,
-        'experiences': [ {
-                'position': formData.position,
-                'employer': formData.employer,
-                'start_date': formData.start_date.split("-").join("/"),
-                'due_date': formData.due_date.split("-").join("/"),
-                'description': formData.description
-            }    
-        ],
-        'educations': [{
-            'institute': formData.institute,
-            'degree_id': formData.degree,
-            'due_date': formData.due_date_edu.split("-").join("/"),
-            'description': formData.description_ed
-        }], 
-        'about_me': formData.about_me,
-        'image': img
-    }
+    // let strArr = `{
+    //     "position": "${localStorageData.position}",
+    //     "employer": "${localStorageData.employer}",
+    //     "start_date": "${localStorageData.start_date.split("-").join("/")}",
+    //     "due_date": "${localStorageData.due_date.split("-").join("/")}",
+    //     "description": "${localStorageData.description}"
+    //   }`
+      let arr = [
+        {
+          "position": "back-end developer",
+          "employer": "Redberry",
+          "start_date": "2019/09/09",
+          "due_date": "2020/09/23",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare nunc dui, a pellentesque magna blandit dapibus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum mattis diam nisi, at venenatis dolor aliquet vel. Pellentesque aliquet leo nec tortor pharetra, ac consectetur orci bibendum."
+        }
+      ]
+      if (!Array.isArray(arr)) {
+        console.error('The experiences must be an array, but it is not.');
+      } else if(Array.isArray(arr)) {
+        console.info('is array')
+      }
+      
+    //   if (!Array.isArray(educations)) {
+    //     console.error('The educations must be an array, but it is not.');
+    //   }
+      
+    const formData = new FormData();
 
-    // readFileAsBinaryString(fileInput)
-    //     .then(file => {
-    //         formattedData.image = file
-    //         console.log(formattedData.image);
-    //     })
-    //     .catch(error => {
-    //         console.error(error)
-    //     })
-    
-   
-    // if (fileInput.files.length > 0) {
-    //     let image = 
-    // }
+    formData.append("name", localStorageData.name);
+    formData.append("surname", localStorageData.surname);
+    formData.append("email", localStorageData.email);
+    formData.append("phone_number", localStorageData.phone_number);
+    formData.append("experiences", 
+    [
+        {
+          "position": "back-end developer",
+          "employer": "Redberry",
+          "start_date": "2019/09/09",
+          "due_date": "2020/09/23",
+          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare nunc dui, a pellentesque magna blandit dapibus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum mattis diam nisi, at venenatis dolor aliquet vel. Pellentesque aliquet leo nec tortor pharetra, ac consectetur orci bibendum."
+        }
+      ],
+    );
+    formData.append("educations", [{
+      "institute": localStorageData.institute,
+      "degree_id": localStorageData.degree,
+      "due_date": localStorageData.due_date_edu.split("-").join("/"),
+      "description": localStorageData.description_ed
+    }]);
+    formData.append("about_me", localStorageData.about_me);
+    formData.append("image", file);
 
-    // if (fileInput.files.length > 0) {
-    //     // convert file to binary string
-    //     const reader = new FileReader()
-    //     reader.onload = function() {
-    //         const binaryString = reader.result
-    //         let file = new File([binaryString], 'img.jpeg', {type: 'image/jpeg'})
-    //         formattedData.image = file
-    //         console.log(formattedData.image);
-    //     };
-    //     reader.readAsBinaryString(fileInput.files[0])
-    // }
-    console.log(formattedData.image)
+
     try {
-        console.log(formattedData)
+        console.log(typeof formData.get("experiences"));
         const response = await fetch(url, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-                'Connection': 'keep-alive'
-            },
-            body: JSON.stringify(formattedData),
-        })
+            headers : {
+                                'Connection': 'keep-alive',
+                                'Accept': 'application/json',
 
-        // console.log();
+            },
+            body: formData
+        })
         
         if (!response.ok) {
             const errorMessage = await response.text()
-            console.error('image' in formattedData);
+
             throw new Error(errorMessage)
         } else {
             console.log('yay u did it')
@@ -457,3 +444,4 @@ async function handleFormSubmit(e) {
         console.error(error)
     }
 }
+
