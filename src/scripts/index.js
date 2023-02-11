@@ -14,11 +14,6 @@ const aboutMeInput = document.getElementById('about_me')
 const emailInput = document.getElementById('email')
 const numberInput = document.getElementById('phone_number')
 
-// const positionInput = document.getElementById('position-0')
-// const employerInput = document.getElementById('employer-0')
-// const startDate = document.getElementById('start_date-0')
-// const dueDate = document.getElementById('due_date-0')
-// const description = document.getElementById('description-0')
 
 const instituteInput = document.getElementById('institute')
 const degreeSelect = document.getElementById('degree')
@@ -32,115 +27,119 @@ const inputsThirdPage = [instituteInput, degreeSelect, dueDateEdu, descriptionEd
 const form = document.querySelector('form')
 const formElements = form.elements
 
-const addExperience = document.getElementById('add--experience');
-const addEducation = document.getElementById('add--education');
+const addExperience = document.getElementById('add--experience')
+const addEducation = document.getElementById('add--education')
 
-let positionCounter = 0;
-let experiences = [];
+let positionCounter = 0
+let experiences = []
 
 
 const addPosition = () => {
-    const positionInput = document.querySelector(`#position-${positionCounter}`);
-    const employerInput = document.querySelector(`#employer-${positionCounter}`);
+    const positionInput = document.querySelector(`#position-${positionCounter}`)
+    const employerInput = document.querySelector(`#employer-${positionCounter}`)
     const startDate = document.querySelector(`#start_date-${positionCounter}`)
     const dueDate = document.querySelector(`#due_date-${positionCounter}`)
-    const descriptionInput = document.querySelector(`#description-${positionCounter}`);
+    const descriptionInput = document.querySelector(`#description-${positionCounter}`)
 
-    const positionValue = positionInput.value;
-    const employerValue = employerInput.value;
-    const startDateValue = startDate.value;
-    const dueDateValue = dueDate.value;
-    const descriptionValue = descriptionInput.value;
-
-    experiences.push({ 
-        position: positionValue,
-        employer:  employerValue,
-        start_date: startDateValue,
-        due_date: dueDateValue,
-        description: descriptionValue
-    });
-
-    localStorage.setItem("experiences", JSON.stringify(experiences));
-
-    positionCounter++;
-
-    const div = document.createElement("div");
-
-    div.innerHTML = `
-    <div class="input--group ">
-            <label class="input-group__label" for="position">თანამდებობა</label>
-            <div class="position--div">
-                <input class="input-group__input" type="text" name="position" id="position-${positionCounter}" oninput="updateExperience(${positionCounter}); validateInput(this, this.getAttribute('data-regex'))" placeholder="Position" data-regex="^.{2,}$">
-                <i class="fas fa-check-circle validation--icons outside"></i>
-                <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
-            </div>
-            <span class="input-group__span">მინიმუმ 2 სიმბოლო</span>
-        </div>
-
-        <div class="input--group employer">
-            <label class="input-group__label" for="employer">დამსაქმებელი</label>
-            <div class="position--div">
-                <input class="input-group__input" type="text" name="employer" id="employer-${positionCounter}" oninput="updateExperience(${positionCounter}); validateInput(this, this.getAttribute('data-regex'))" placeholder="დამსაქმებელი" data-regex="^.{2,}$">
-                <i class="fas fa-check-circle validation--icons outside"></i>
-                <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
-            </div>
-            <span class="input-group__span">მინიმუმ 2 სიმბოლო</span>
-        </div>
-
-        <div class="input-groups__names">
-            <div class="input--group">
-                <label for="start_date">დაწყების რიცხვი</label>
+    if(validatePage([positionInput, employerInput, startDate, dueDate, descriptionInput])) 
+    {
+        const positionValue = positionInput.value
+        const employerValue = employerInput.value
+        const startDateValue = startDate.value
+        const dueDateValue = dueDate.value
+        const descriptionValue = descriptionInput.value
+    
+        experiences.push({ 
+            position: positionValue,
+            employer:  employerValue,
+            start_date: startDateValue,
+            due_date: dueDateValue,
+            description: descriptionValue
+        })
+    
+        localStorage.setItem("experiences", JSON.stringify(experiences))
+    
+        positionCounter++
+    
+        const div = document.createElement("div")
+    
+        div.innerHTML = `
+        <div class="input--group ">
+                <label class="input-group__label" for="position">თანამდებობა</label>
                 <div class="position--div">
-                    <input type="date" id="start_date-${positionCounter}" name="start_date" oninput="updateDates(${positionCounter}); validateInput(this, this.getAttribute('data-regex'))"
-                    value="mm/dd/yyyy" min="1900-01-01">
+                    <input class="input-group__input" type="text" name="position" id="position-${positionCounter}" oninput="updateExperience(${positionCounter}); validateInput(this, this.getAttribute('data-regex'))" placeholder="Position" data-regex="^.{2,}$">
                     <i class="fas fa-check-circle validation--icons outside"></i>
                     <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
+                </div>
+                <span class="input-group__span">მინიმუმ 2 სიმბოლო</span>
+            </div>
+    
+            <div class="input--group employer">
+                <label class="input-group__label" for="employer">დამსაქმებელი</label>
+                <div class="position--div">
+                    <input class="input-group__input" type="text" name="employer" id="employer-${positionCounter}" oninput="updateExperience(${positionCounter}); validateInput(this, this.getAttribute('data-regex'))" placeholder="დამსაქმებელი" data-regex="^.{2,}$">
+                    <i class="fas fa-check-circle validation--icons outside"></i>
+                    <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
+                </div>
+                <span class="input-group__span">მინიმუმ 2 სიმბოლო</span>
+            </div>
+    
+            <div class="input-groups__names">
+                <div class="input--group">
+                    <label for="start_date">დაწყების რიცხვი</label>
+                    <div class="position--div">
+                        <input type="date" id="start_date-${positionCounter}" name="start_date" oninput="updateDates(${positionCounter}); validateInput(this, this.getAttribute('data-regex'))"
+                        value="mm/dd/yyyy" min="1900-01-01">
+                        <i class="fas fa-check-circle validation--icons outside"></i>
+                        <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
+                    </div>
+                    
                 </div>
                 
+                <div class="input--group">
+                    <label for="due_date">დამთავრების რიცხვი</label> 
+                    <div class="position--div">
+                        <input type="date" id="due_date-${positionCounter}" oninput="updateDates(${positionCounter}); validateInput(this, this.getAttribute('data-regex'))" name="due_date"
+                        value="mm/dd/yyyy" min="1900-01-01">
+                        <i class="fas fa-check-circle validation--icons outside"></i>
+                        <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
+                    </div>
+                </div>
             </div>
-            
-            <div class="input--group">
-                <label for="due_date">დამთავრების რიცხვი</label> 
+    
+            <div class="input--group experience--info">
+                <label class="input-group__label" for="description">აღწერა</label>
                 <div class="position--div">
-                    <input type="date" id="due_date-${positionCounter}" oninput="updateDates(${positionCounter}); validateInput(this, this.getAttribute('data-regex'))" name="due_date"
-                    value="mm/dd/yyyy" min="1900-01-01">
+                    <textarea name="description" id="description-${positionCounter}"  oninput="updateDescription(${positionCounter}); validateInput(this, this.getAttribute('data-regex'))" placeholder="როლი თანამდებობაზე და ზოგადი აღწერა" data-regex="^.+$"></textarea>
                     <i class="fas fa-check-circle validation--icons outside"></i>
                     <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
                 </div>
             </div>
-        </div>
-
-        <div class="input--group experience--info">
-            <label class="input-group__label" for="description">აღწერა</label>
-            <div class="position--div">
-                <textarea name="description" id="description-${positionCounter}"  oninput="updateDescription(${positionCounter}); validateInput(this, this.getAttribute('data-regex'))" placeholder="როლი თანამდებობაზე და ზოგადი აღწერა" data-regex="^.+$"></textarea>
-                <i class="fas fa-check-circle validation--icons outside"></i>
-                <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
-            </div>
-        </div>
-
-        <hr>
-    `
-
-    const experience  = document.createElement('div')
-    experience.id = `experience-resume-${positionCounter}`
-    experience.innerHTML = `
-                     <div class="resume--experience">
-                        <h2 class="resume--about--header" id="resume--header-${positionCounter}"></h2>
-                        <p class='resume--position' id="resume--position-${positionCounter}""></p>
-                        <span class='resume--position' id="resume--employer-${positionCounter}""></span>
-                    </div>
-
-                    <p class="resume--dates" id="resume-start-date-${positionCounter}""></p>
-                    <span class="resume--dates" id="resume-due-date-${positionCounter}""></span>
-                    <p class="resume--description" id="resume-description-${positionCounter}"></p>`
     
-    document.querySelector('.sec-page-0').appendChild(experience)
+            <hr>
+        `
+    
+        const experience  = document.createElement('div')
+        experience.id = `experience-resume-${positionCounter}`
+        experience.innerHTML = `
+                         <div class="resume--experience">
+                            <h2 class="resume--about--header" id="resume--header-${positionCounter}"></h2>
+                            <p class='resume--position' id="resume--position-${positionCounter}""></p>
+                            <span class='resume--position' id="resume--employer-${positionCounter}""></span>
+                        </div>
+    
+                        <p class="resume--dates" id="resume-start-date-${positionCounter}""></p>
+                        <span class="resume--dates" id="resume-due-date-${positionCounter}""></span>
+                        <p class="resume--description" id="resume-description-${positionCounter}"></p>`
+        
+        document.querySelector('.sec-page-0').appendChild(experience)
+    
+        document.querySelector('.experience').insertBefore(div, document.querySelector("#add--experience"))
+    }
 
-    document.querySelector('.experience').insertBefore(div, document.querySelector("#add--experience"));
-};
+}
 
-document.querySelector("#add--experience").addEventListener("click", addPosition);
+document.querySelector("#add--experience").addEventListener("click", addPosition)
 
 
 // EVENT LISTENERS
@@ -161,18 +160,6 @@ emailInput.addEventListener('input', updateEmail)
 numberInput.addEventListener('input',  () => validateInput(numberInput, numberInput.dataset.regex))
 numberInput.addEventListener('input', updateNumber)
 
-// positionInput.addEventListener('input', () => validateInput(positionInput, positionInput.dataset.regex))
-// positionInput.addEventListener('input', updateExperience)
-
-// employerInput.addEventListener('input', () => validateInput(employerInput, employerInput.dataset.regex))
-// employerInput.addEventListener('input', updateExperience)
-
-// startDate.addEventListener('input', () => validateInput(startDate, startDate.dataset.regex))
-// startDate.addEventListener('input', updateDates)
-
-// dueDate.addEventListener('input', () => validateInput(dueDate, dueDate.dataset.regex))
-// dueDate.addEventListener('input', updateDates)
-
 instituteInput.addEventListener('input', () => validateInput(instituteInput, instituteInput.dataset.regex))
 instituteInput.addEventListener('input', updateInstitute)
 
@@ -188,22 +175,28 @@ descriptionEdu.addEventListener('input', updateDescriptionEdu)
 fileInput.addEventListener('change', updateResumeImg)
 fileInput.addEventListener('input', saveFile)
 
-let formatedExperiences = [];
+let formatedExperiences = []
 
 
 async function saveFile(e) {
     const image = e.target.files[0]
 
-    // const checkIcon = fileInput.nextElementSibling;
-    // const warningIcon = checkIcon.nextElementSibling;
+    const checkIcon = document.querySelector('.fileIcon')
+    const warnIcon = document.querySelector('.fileIconWarn')
 
-    // if(image) checkIcon.style.display = 'inline'
-
-    const reader = new FileReader()
-    reader.readAsDataURL(image)
-    reader.addEventListener('load', () => {
+    if(image && image['type'].split('/')[0] === 'image') { 
+        checkIcon.style.display = 'inline'
+        warnIcon.style.display = 'none'
+        const reader = new FileReader()
+        reader.readAsDataURL(image)
+        reader.addEventListener('load', () => {
         localStorage.setItem('image', reader.result)
     })
+    } else {
+        checkIcon.style.display = 'none'
+        warnIcon.style.display = 'inline'
+    }
+    
 }
 
 // FETCHING DATA FOR DEGREES
@@ -222,8 +215,8 @@ fetch('https://resume.redberryinternship.ge/api/degrees')
 function validateInput(input, regex) {
     let isValid = false
 
-    const checkIcon = input.nextElementSibling;
-    const warningIcon = checkIcon.nextElementSibling;
+    const checkIcon = input.nextElementSibling
+    const warningIcon = checkIcon.nextElementSibling
 
     
     if (input.type === 'date') {
@@ -325,21 +318,25 @@ function updateNumber() {
 function updateExperience(id) {
 
     let experience = document.getElementById(`experience-resume-${positionCounter}`)
-    console.log(experience);
-console.log(positionCounter);
+
     let pos = document.getElementById(`position-${positionCounter}`)
     let employer = document.getElementById(`employer-${positionCounter}`)
-    experience.querySelector('.resume--experience').innerHTML = `
-    <h2 class="resume--about--header">გამოცდილება</h2>
-    <p class='resume--position'>${pos.value} ${employer.value}</p> 
-    `
+    if(positionCounter == 0) {
+        experience.querySelector('.resume--experience').innerHTML = `
+        <h2 class="resume--about--header">გამოცდილება</h2>
+        <p class='resume--position'>${pos.value} ${employer.value}</p> 
+        `
+    } else {
+        experience.querySelector('.resume--experience').innerHTML = `
+        <p class='resume--position'>${pos.value} ${employer.value}</p> 
+        `
+    }
+    
 }
 
-function updateDates() {
+function updateDates(id) {
   
     let experience = document.getElementById(`experience-resume-${positionCounter}`)
-    console.log(experience);
-    console.log(positionCounter);
     let startData = document.getElementById(`start_date-${positionCounter}`)
     let dueData = document.getElementById(`due_date-${positionCounter}`)
     experience.querySelector('.resume--dates').innerHTML = `${startData.value} - ${dueData.value}`
@@ -511,11 +508,34 @@ async function handleFormSubmit(e) {
     const localStorageData = JSON.parse(localStorage.getItem('formData'))
     const imageUrl = localStorage.getItem('image')
     const experiences = JSON.parse(localStorage.getItem("experiences"))
+    const formatedExperiences = []
+    const formData = new FormData()
 
+    // experiences.forEach((experience) => {
+    //     const formatedExperience = {
+    //       position: experience.position,
+    //       employer: experience.employer,
+    //       start_date: experience.start_date.replace(/-/g, '/'),
+    //       due_date: experience.due_date.replace(/-/g, '/'),
+    //       description: experience.description,
+    //     }
+    //     // formData.append("experiences", JSON.stringify(formatedExperience))
+    //     formatedExperiences.push(formatedExperience)
+    //   })
+  
+    experiences.map(el => formatedExperiences.push({
+        position: el.position,
+        employer: el.employer,
+        start_date: el.start_date.replace(/-/g, '/'),
+        due_date: el.due_date.replace(/-/g, '/'),
+        description: el.description,
+    }))
+    
     const file = await fetch(imageUrl)
       .then(res => res.blob())
 
-    const formData = new FormData()
+
+    try {
 
     formData.append("name", localStorageData.name)
     formData.append("surname", localStorageData.surname)
@@ -525,20 +545,20 @@ async function handleFormSubmit(e) {
     formData.append("image", file)
     formData.append("educations", {
         "position": localStorageData.position,
-            "employer": localStorageData.employer,
-            "start_date": localStorageData.start_date.split("-").join("/"),
-            "due_date": localStorageData.due_date.split("-").join("/"),
-            "description": localStorageData.description
+        "employer": localStorageData.employer,
+        "start_date": localStorageData.start_date.split("-").join("/"),
+        "due_date": localStorageData.due_date.split("-").join("/"),
+        "description": localStorageData.description
     })
       
-    formData.append("experiences", JSON.stringify(experiences));
-    try {
-        console.log(formData.get('experiences'))
+    formData.append("experiences", JSON.stringify(experiences))
+
         const response = await fetch(url, {
             method: 'POST',
             headers : {
                 'Connection': 'keep-alive',
                 'Accept': 'application/json',
+                // 'Content-Type': 'multipart/form-data'
             },
             body: formData
         })
