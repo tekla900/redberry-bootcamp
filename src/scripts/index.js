@@ -14,11 +14,11 @@ const aboutMeInput = document.getElementById('about_me')
 const emailInput = document.getElementById('email')
 const numberInput = document.getElementById('phone_number')
 
-const positionInput = document.getElementById('position')
-const employerInput = document.getElementById('employer')
-const startDate = document.getElementById('start_date')
-const dueDate = document.getElementById('due_date')
-const description = document.getElementById('description')
+// const positionInput = document.getElementById('position')
+// const employerInput = document.getElementById('employer')
+// const startDate = document.getElementById('start_date')
+// const dueDate = document.getElementById('due_date')
+// const description = document.getElementById('description')
 
 const instituteInput = document.getElementById('institute')
 const degreeSelect = document.getElementById('degree')
@@ -26,12 +26,134 @@ const dueDateEdu = document.getElementById('due_date_edu')
 const descriptionEdu = document.getElementById('description_edu')
 
 const inputsFirstPage = [nameInput, surnameInput, aboutMeInput, emailInput, numberInput, fileInput]
-const inputsSecPage = [positionInput, employerInput, startDate, dueDate, description]
+const inputsSecPage = document.querySelector('.experience').querySelectorAll("input, select, checkbox, textarea");
 const inputsThirdPage = [instituteInput, degreeSelect, dueDateEdu, descriptionEdu]
 
 const form = document.querySelector('form')
 const formElements = form.elements
 
+const addExperience = document.getElementById('add--experience');
+const addEducation = document.getElementById('add--education');
+
+let positionCounter = 0;
+let experiences = [];
+
+
+const addPosition = () => {
+    const positionInput = document.querySelector(`#position-${positionCounter}`);
+    const employerInput = document.querySelector(`#employer-${positionCounter}`);
+    const startDate = document.querySelector(`#start_date-${positionCounter}`)
+    const dueDate = document.querySelector(`#due_date-${positionCounter}`)
+    const descriptionInput = document.querySelector(`#description-${positionCounter}`);
+
+    positionInput.addEventListener('input', () => validateInput(positionInput, positionInput.dataset.regex))
+    console.log(positionInput);
+    console.log(positionInput.dataset.regex);
+    positionInput.addEventListener('input', updateExperience)
+
+    employerInput.addEventListener('input', () => validateInput(employerInput, employerInput.dataset.regex))
+    employerInput.addEventListener('input', updateExperience)
+
+    startDate.addEventListener('input', () => validateInput(startDate, startDate.dataset.regex))
+    startDate.addEventListener('input', updateDates)
+
+    dueDate.addEventListener('input', () => validateInput(dueDate, dueDate.dataset.regex))
+    dueDate.addEventListener('input', updateDates)
+
+    descriptionInput.addEventListener('input', () => validateInput(descriptionInput, descriptionInput.dataset.regex))
+    descriptionInput.addEventListener('input', updateDescription)
+
+
+    const positionValue = positionInput.value;
+    const employerValue = employerInput.value;
+    const startDateValue = startDate.value;
+    const dueDateValue = dueDate.value;
+    const descriptionValue = descriptionInput.value;
+
+    experiences.push({ 
+        position: positionValue,
+        employer:  employerValue,
+        start_date: startDateValue,
+        due_date: dueDateValue,
+        description: descriptionValue
+    });
+
+    localStorage.setItem("experiences", JSON.stringify(experiences));
+
+    positionCounter++;
+
+    const div = document.createElement("div");
+
+    div.innerHTML = `
+    <div class="input--group ">
+            <label class="input-group__label" for="position">თანამდებობა</label>
+            <div class="position--div">
+                <input class="input-group__input" type="text" name="position" id="position-${positionCounter}" placeholder="Position" data-regex="^.{2,}$">
+                <i class="fas fa-check-circle validation--icons outside"></i>
+                <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
+            </div>
+            <span class="input-group__span">მინიმუმ 2 სიმბოლო</span>
+        </div>
+
+        <div class="input--group employer">
+            <label class="input-group__label" for="employer">დამსაქმებელი</label>
+            <div class="position--div">
+                <input class="input-group__input" type="text" name="employer" id="employer-${positionCounter}" placeholder="დამსაქმებელი" data-regex="^.{2,}$">
+            </div>
+            <span class="input-group__span">მინიმუმ 2 სიმბოლო</span>
+        </div>
+
+        <div class="input-groups__names">
+            <div class="input--group">
+                <label for="start_date">დაწყების რიცხვი</label>
+                <div class="position--div">
+                    <input type="date" id="start_date-${positionCounter}" name="start_date"
+                    value="mm/dd/yyyy" min="1900-01-01">
+                </div>
+                
+            </div>
+            
+            <div class="input--group">
+                <label for="due_date">დამთავრების რიცხვი</label> 
+                <div class="position--div">
+                    <input type="date" id="due_date-${positionCounter}" name="due_date"
+                    value="mm/dd/yyyy" min="1900-01-01">
+                </div>
+            </div>
+        </div>
+
+        <div class="input--group experience--info">
+            <label class="input-group__label" for="description">აღწერა</label>
+            <div class="position--div">
+                <textarea name="description" id="description-${positionCounter}"  placeholder="როლი თანამდებობაზე და ზოგადი აღწერა" data-regex="^.+$"></textarea>
+            </div>
+        </div>
+
+        <hr>
+    `
+    document.querySelector('.experience').insertBefore(div, document.querySelector("#add--experience"));
+};
+
+document.querySelector("#add--experience").addEventListener("click", addPosition);
+
+
+// function saveExperience() {
+//     const secPage = document.querySelector('.experience')
+//     let experiencesArr = []
+
+//     // აქ შეიძლება ყოველდაჭერაზე რაღაც კლასი მივცე და იმ კლასის ყველა წამოვიღო
+//     const inputs = secPage.querySelectorAll('input')
+//     let obj = {}
+    
+//     for (let i = 0; i < inputs.length; i++) {
+//         const input = inputs[i];
+//         obj[input.name] = input.value;
+//     }
+  
+//     experiencesArr.push(obj)
+
+//     localStorage.setItem("experiences", JSON.stringify(experiencesArr))
+// }
 // EVENT LISTENERS
 form.addEventListener('submit', handleFormSubmit)
 
@@ -50,20 +172,8 @@ emailInput.addEventListener('input', updateEmail)
 numberInput.addEventListener('input',  () => validateInput(numberInput, numberInput.dataset.regex))
 numberInput.addEventListener('input', updateNumber)
 
-positionInput.addEventListener('input', () => validateInput(positionInput, positionInput.dataset.regex))
-positionInput.addEventListener('input', updateExperience)
 
-employerInput.addEventListener('input', () => validateInput(employerInput, employerInput.dataset.regex))
-employerInput.addEventListener('input', updateExperience)
 
-startDate.addEventListener('input', () => validateInput(startDate, startDate.dataset.regex))
-startDate.addEventListener('input', updateDates)
-
-dueDate.addEventListener('input', () => validateInput(dueDate, dueDate.dataset.regex))
-dueDate.addEventListener('input', updateDates)
-
-description.addEventListener('input', () => validateInput(description, description.dataset.regex))
-description.addEventListener('input', updateDescription)
 
 instituteInput.addEventListener('input', () => validateInput(instituteInput, instituteInput.dataset.regex))
 instituteInput.addEventListener('input', updateInstitute)
@@ -80,8 +190,17 @@ descriptionEdu.addEventListener('input', updateDescriptionEdu)
 fileInput.addEventListener('change', updateResumeImg)
 fileInput.addEventListener('input', saveFile)
 
+let formatedExperiences = [];
+
+
 async function saveFile(e) {
     const image = e.target.files[0]
+
+    // const checkIcon = fileInput.nextElementSibling;
+    // const warningIcon = checkIcon.nextElementSibling;
+
+    // if(image) checkIcon.style.display = 'inline'
+
     const reader = new FileReader()
     reader.readAsDataURL(image)
     reader.addEventListener('load', () => {
@@ -154,6 +273,9 @@ function showTab(n) {
     const titles = ['ზოგადი ინფო', 'გამოცდილება', 'განათლება']
     document.querySelector('.survey__title').innerHTML = titles[n]
 
+    // if(currentTab == 1) {
+    //     document.getElementById("nextBtn").addEventListener('click', saveExperience)
+    // }
     if (n === (pages.length - 1)) document.getElementById("nextBtn").innerHTML = 'ᲓᲐᲡᲠᲣᲚᲔᲑᲐ'
 }
 
@@ -365,11 +487,13 @@ function readFileAsBinaryString(fileInput) {
 async function handleFormSubmit(e) {
     e.preventDefault()
  
-
-    // const url = form.action
     const url = 'https://resume.redberryinternship.ge/api/cvs'
     const localStorageData = JSON.parse(localStorage.getItem('formData'))
     const imageUrl = localStorage.getItem('image')
+    const experiences = JSON.parse(localStorage.getItem("experiences"))
+    // console.log(experiences[0]);
+    // console.log(experiences);
+
     // let base64Img = imageUrl.replace('data:', '').replace(/^.+,/, '')
     // console.log({base64Img})
     // let img = await readFileAsBinaryString(fileInput)
@@ -383,60 +507,40 @@ async function handleFormSubmit(e) {
     //     "due_date": "${localStorageData.due_date.split("-").join("/")}",
     //     "description": "${localStorageData.description}"
     //   }`
-      let arr = [
-        {
-          "position": "back-end developer",
-          "employer": "Redberry",
-          "start_date": "2019/09/09",
-          "due_date": "2020/09/23",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare nunc dui, a pellentesque magna blandit dapibus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum mattis diam nisi, at venenatis dolor aliquet vel. Pellentesque aliquet leo nec tortor pharetra, ac consectetur orci bibendum."
-        }
-      ]
-      if (!Array.isArray(arr)) {
-        console.error('The experiences must be an array, but it is not.');
-      } else if(Array.isArray(arr)) {
-        console.info('is array')
-      }
-      
-    //   if (!Array.isArray(educations)) {
-    //     console.error('The educations must be an array, but it is not.');
-    //   }
-      
-    const formData = new FormData();
 
-    formData.append("name", localStorageData.name);
-    formData.append("surname", localStorageData.surname);
-    formData.append("email", localStorageData.email);
-    formData.append("phone_number", localStorageData.phone_number);
-    formData.append("experiences", 
-    [
-        {
-          "position": "back-end developer",
-          "employer": "Redberry",
-          "start_date": "2019/09/09",
-          "due_date": "2020/09/23",
-          "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ornare nunc dui, a pellentesque magna blandit dapibus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum mattis diam nisi, at venenatis dolor aliquet vel. Pellentesque aliquet leo nec tortor pharetra, ac consectetur orci bibendum."
-        }
-      ],
-    );
-    formData.append("educations", [{
-      "institute": localStorageData.institute,
-      "degree_id": localStorageData.degree,
-      "due_date": localStorageData.due_date_edu.split("-").join("/"),
-      "description": localStorageData.description_ed
-    }]);
-    formData.append("about_me", localStorageData.about_me);
-    formData.append("image", file);
+    const formData = new FormData()
+
+    formData.append("name", localStorageData.name)
+    formData.append("surname", localStorageData.surname)
+    formData.append("email", localStorageData.email)
+    formData.append("phone_number", localStorageData.phone_number)
+    formData.append("about_me", localStorageData.about_me)
+    formData.append("image", file)
+    formData.append("educations", {
+        "position": localStorageData.position,
+            "employer": localStorageData.employer,
+            "start_date": localStorageData.start_date.split("-").join("/"),
+            "due_date": localStorageData.due_date.split("-").join("/"),
+            "description": localStorageData.description
+    })
+      
+    formData.append("experiences", JSON.stringify(experiences));
+// let educationArr = [] 
+// let firstOne = {
+//     institute: localStorageData.institute,
+//     degree_id: localStorageData.degree,
+//     due_date: localStorageData.due_date_edu.split("-").join("/"),
+//     description: localStorageData.description_ed
+// }
 
 
     try {
-        console.log(typeof formData.get("experiences"));
+        console.log(formData.get('experiences'))
         const response = await fetch(url, {
             method: 'POST',
             headers : {
-                                'Connection': 'keep-alive',
-                                'Accept': 'application/json',
-
+                'Connection': 'keep-alive',
+                'Accept': 'application/json',
             },
             body: formData
         })
@@ -452,5 +556,5 @@ async function handleFormSubmit(e) {
     } catch (error) {
         console.error(error)
     }
-}
 
+}
