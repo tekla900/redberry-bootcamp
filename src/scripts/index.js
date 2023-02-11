@@ -70,7 +70,7 @@ const addPosition = () => {
     <div class="input--group ">
             <label class="input-group__label" for="position">თანამდებობა</label>
             <div class="position--div">
-                <input class="input-group__input" type="text" name="position" id="position-${positionCounter}" oninput="updateExperience(${positionCounter})" placeholder="Position" data-regex="^.{2,}$">
+                <input class="input-group__input" type="text" name="position" id="position-${positionCounter}" oninput="updateExperience(${positionCounter}); validateInput(this, this.getAttribute('data-regex'))" placeholder="Position" data-regex="^.{2,}$">
                 <i class="fas fa-check-circle validation--icons outside"></i>
                 <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
             </div>
@@ -80,7 +80,7 @@ const addPosition = () => {
         <div class="input--group employer">
             <label class="input-group__label" for="employer">დამსაქმებელი</label>
             <div class="position--div">
-                <input class="input-group__input" type="text" name="employer" id="employer-${positionCounter}" oninput="updateExperience(${positionCounter})" placeholder="დამსაქმებელი" data-regex="^.{2,}$">
+                <input class="input-group__input" type="text" name="employer" id="employer-${positionCounter}" oninput="updateExperience(${positionCounter}); validateInput(this, this.getAttribute('data-regex'))" placeholder="დამსაქმებელი" data-regex="^.{2,}$">
                 <i class="fas fa-check-circle validation--icons outside"></i>
                 <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
             </div>
@@ -91,7 +91,7 @@ const addPosition = () => {
             <div class="input--group">
                 <label for="start_date">დაწყების რიცხვი</label>
                 <div class="position--div">
-                    <input type="date" id="start_date-${positionCounter}" name="start_date" oninput="updateDates(${positionCounter})"
+                    <input type="date" id="start_date-${positionCounter}" name="start_date" oninput="updateDates(${positionCounter}); validateInput(this, this.getAttribute('data-regex'))"
                     value="mm/dd/yyyy" min="1900-01-01">
                     <i class="fas fa-check-circle validation--icons outside"></i>
                     <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
@@ -102,7 +102,7 @@ const addPosition = () => {
             <div class="input--group">
                 <label for="due_date">დამთავრების რიცხვი</label> 
                 <div class="position--div">
-                    <input type="date" id="due_date-${positionCounter}" oninput="updateDates(${positionCounter})" name="due_date"
+                    <input type="date" id="due_date-${positionCounter}" oninput="updateDates(${positionCounter}); validateInput(this, this.getAttribute('data-regex'))" name="due_date"
                     value="mm/dd/yyyy" min="1900-01-01">
                     <i class="fas fa-check-circle validation--icons outside"></i>
                     <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
@@ -113,7 +113,7 @@ const addPosition = () => {
         <div class="input--group experience--info">
             <label class="input-group__label" for="description">აღწერა</label>
             <div class="position--div">
-                <textarea name="description" id="description-${positionCounter}"  oninput="updateDescription(${positionCounter})" placeholder="როლი თანამდებობაზე და ზოგადი აღწერა" data-regex="^.+$"></textarea>
+                <textarea name="description" id="description-${positionCounter}"  oninput="updateDescription(${positionCounter}); validateInput(this, this.getAttribute('data-regex'))" placeholder="როლი თანამდებობაზე და ზოგადი აღწერა" data-regex="^.+$"></textarea>
                 <i class="fas fa-check-circle validation--icons outside"></i>
                 <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
             </div>
@@ -126,9 +126,9 @@ const addPosition = () => {
     experience.id = `experience-resume-${positionCounter}`
     experience.innerHTML = `
                      <div class="resume--experience">
-                        <h2 class="resume--about--header-0" id="resume--header-${positionCounter}"></h2>
-                        <p class='resume--position-0' id="resume--position-${positionCounter}""></p>
-                        <span class='resume--position-0' id="resume--employer-${positionCounter}""></span>
+                        <h2 class="resume--about--header" id="resume--header-${positionCounter}"></h2>
+                        <p class='resume--position' id="resume--position-${positionCounter}""></p>
+                        <span class='resume--position' id="resume--employer-${positionCounter}""></span>
                     </div>
 
                     <p class="resume--dates" id="resume-start-date-${positionCounter}""></p>

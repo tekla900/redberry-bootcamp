@@ -276,6 +276,7 @@ input[name="name"], input[name="surname"], input[type="date"] {
 
 .resume {
     /* height: 100vh; */
+    box-sizing: content-box;
     display: flex;
     width: 822px;
     position: relative;

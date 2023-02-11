@@ -93,7 +93,7 @@
                 <div class="input--group ">
                     <label class="input-group__label" for="position-0">თანამდებობა</label>
                     <div class="position--div">
-                        <input class="input-group__input" type="text" oninput="updateExperience(0)" name="position" id="position-0" placeholder="თანამდებობა" data-regex="^.{2,}$">
+                        <input class="input-group__input" type="text" oninput="updateExperience(0); validateInput(this, this.getAttribute('data-regex'))" name="position" id="position-0" placeholder="თანამდებობა" data-regex="^.{2,}$">
                         <i class="fas fa-check-circle validation--icons outside"></i>
                         <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
                     </div>
@@ -103,7 +103,7 @@
                 <div class="input--group employer">
                     <label class="input-group__label" for="employer-0">დამსაქმებელი</label>
                     <div class="position--div">
-                        <input class="input-group__input" type="text" oninput="updateExperience(0)" name="employer" id="employer-0" placeholder="დამსაქმებელი" data-regex="^.{2,}$">
+                        <input class="input-group__input" type="text" oninput="updateExperience(0); validateInput(this, this.getAttribute('data-regex'))" name="employer" id="employer-0" placeholder="დამსაქმებელი" data-regex="^.{2,}$">
                         <i class="fas fa-check-circle validation--icons outside"></i>
                         <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
                     </div>
@@ -115,7 +115,7 @@
                         <label for="start_date-0">დაწყების რიცხვი</label>
                         <div class="position--div">
                             <input type="date" id="start_date-0" name="start_date"
-                            value="mm/dd/yyyy" min="1900-01-01" oninput="updateDates(0)">
+                            value="mm/dd/yyyy" min="1900-01-01" oninput="updateDates(0); validateInput(this, this.getAttribute('data-regex'))">
                             <i class="fas fa-check-circle validation--icons outside"></i>
                             <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
                         </div>
@@ -126,7 +126,7 @@
                         <label for="due_date-0">დამთავრების რიცხვი</label> 
                         <div class="position--div">
                             <input type="date" id="due_date-0" name="due_date"
-                            value="mm/dd/yyyy" min="1900-01-01" oninput="updateDates(0)">
+                            value="mm/dd/yyyy" min="1900-01-01" oninput="updateDates(0); validateInput(this, this.getAttribute('data-regex'))" >
                             <i class="fas fa-check-circle validation--icons outside"></i>
                             <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
                         </div>
@@ -136,7 +136,7 @@
                 <div class="input--group experience--info">
                     <label class="input-group__label" for="description-0">აღწერა</label>
                     <div class="position--div">
-                        <textarea name="description" id="description-0" oninput="updateDescription(0)" placeholder="როლი თანამდებობაზე და ზოგადი აღწერა" data-regex="^.+$"></textarea>
+                        <textarea name="description" id="description-0" oninput="updateDescription(0); validateInput(this, this.getAttribute('data-regex'))" placeholder="როლი თანამდებობაზე და ზოგადი აღწერა" data-regex="^.+$"></textarea>
                         <i class="fas fa-check-circle validation--icons outside"></i>
                         <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
                     </div>
@@ -225,9 +225,9 @@
             <div class="sec-page-0">
                 <div class="resume--experience--col" id="experience-resume-0">
                     <div class="resume--experience">
-                        <h2 class="resume--about--header-0" id="resume--header-0"></h2>
-                        <p class='resume--position-0' id="resume--position-0"></p>
-                        <span class='resume--position-0' id="resume--employer-0"></span>
+                        <h2 class="resume--about--header" id="resume--header-0"></h2>
+                        <p class='resume--position' id="resume--position-0"></p>
+                        <span class='resume--position' id="resume--employer-0"></span>
                     </div>
 
                     <p class="resume--dates" id="resume-start-date-0"></p>
