@@ -70,7 +70,7 @@ const addPosition = () => {
     <div class="input--group ">
             <label class="input-group__label" for="position">თანამდებობა</label>
             <div class="position--div">
-                <input class="input-group__input" type="text" name="position" id="position-${positionCounter}" placeholder="Position" data-regex="^.{2,}$">
+                <input class="input-group__input" type="text" name="position" id="position-${positionCounter}" oninput="updateExperience(${positionCounter})" placeholder="Position" data-regex="^.{2,}$">
                 <i class="fas fa-check-circle validation--icons outside"></i>
                 <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
             </div>
@@ -80,7 +80,7 @@ const addPosition = () => {
         <div class="input--group employer">
             <label class="input-group__label" for="employer">დამსაქმებელი</label>
             <div class="position--div">
-                <input class="input-group__input" type="text" name="employer" id="employer-${positionCounter}" placeholder="დამსაქმებელი" data-regex="^.{2,}$">
+                <input class="input-group__input" type="text" name="employer" id="employer-${positionCounter}" oninput="updateExperience(${positionCounter})" placeholder="დამსაქმებელი" data-regex="^.{2,}$">
                 <i class="fas fa-check-circle validation--icons outside"></i>
                 <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
             </div>
@@ -91,7 +91,7 @@ const addPosition = () => {
             <div class="input--group">
                 <label for="start_date">დაწყების რიცხვი</label>
                 <div class="position--div">
-                    <input type="date" id="start_date-${positionCounter}" name="start_date"
+                    <input type="date" id="start_date-${positionCounter}" name="start_date" oninput="updateDates(${positionCounter})"
                     value="mm/dd/yyyy" min="1900-01-01">
                     <i class="fas fa-check-circle validation--icons outside"></i>
                     <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
@@ -102,7 +102,7 @@ const addPosition = () => {
             <div class="input--group">
                 <label for="due_date">დამთავრების რიცხვი</label> 
                 <div class="position--div">
-                    <input type="date" id="due_date-${positionCounter}"  name="due_date"
+                    <input type="date" id="due_date-${positionCounter}" oninput="updateDates(${positionCounter})" name="due_date"
                     value="mm/dd/yyyy" min="1900-01-01">
                     <i class="fas fa-check-circle validation--icons outside"></i>
                     <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
@@ -113,7 +113,7 @@ const addPosition = () => {
         <div class="input--group experience--info">
             <label class="input-group__label" for="description">აღწერა</label>
             <div class="position--div">
-                <textarea name="description" id="description-${positionCounter}"  placeholder="როლი თანამდებობაზე და ზოგადი აღწერა" data-regex="^.+$"></textarea>
+                <textarea name="description" id="description-${positionCounter}"  oninput="updateDescription(${positionCounter})" placeholder="როლი თანამდებობაზე და ზოგადი აღწერა" data-regex="^.+$"></textarea>
                 <i class="fas fa-check-circle validation--icons outside"></i>
                 <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
             </div>
@@ -121,6 +121,22 @@ const addPosition = () => {
 
         <hr>
     `
+
+    const experience  = document.createElement('div')
+    experience.id = `experience-resume-${positionCounter}`
+    experience.innerHTML = `
+                     <div class="resume--experience">
+                        <h2 class="resume--about--header-0" id="resume--header-${positionCounter}"></h2>
+                        <p class='resume--position-0' id="resume--position-${positionCounter}""></p>
+                        <span class='resume--position-0' id="resume--employer-${positionCounter}""></span>
+                    </div>
+
+                    <p class="resume--dates" id="resume-start-date-${positionCounter}""></p>
+                    <span class="resume--dates" id="resume-due-date-${positionCounter}""></span>
+                    <p class="resume--description" id="resume-description-${positionCounter}"></p>`
+    
+    document.querySelector('.sec-page-0').appendChild(experience)
+
     document.querySelector('.experience').insertBefore(div, document.querySelector("#add--experience"));
 };
 
@@ -304,8 +320,13 @@ function updateNumber() {
 }
 
 // const experience = document.querySelector('.resume--experience--col')
-const experience = document.getElementById(`experience-resume-${positionCounter}`)
+
+
 function updateExperience(id) {
+
+    let experience = document.getElementById(`experience-resume-${positionCounter}`)
+    console.log(experience);
+console.log(positionCounter);
     let pos = document.getElementById(`position-${positionCounter}`)
     let employer = document.getElementById(`employer-${positionCounter}`)
     experience.querySelector('.resume--experience').innerHTML = `
@@ -315,37 +336,24 @@ function updateExperience(id) {
 }
 
 function updateDates() {
+  
+    let experience = document.getElementById(`experience-resume-${positionCounter}`)
+    console.log(experience);
+    console.log(positionCounter);
     let startData = document.getElementById(`start_date-${positionCounter}`)
     let dueData = document.getElementById(`due_date-${positionCounter}`)
     experience.querySelector('.resume--dates').innerHTML = `${startData.value} - ${dueData.value}`
 }
 
 function updateDescription(id) {
+    let experience = document.getElementById(`experience-resume-${positionCounter}`)
+
     let descr = document.getElementById(`description-${positionCounter}`)
 
     experience.querySelector('.resume--description').innerHTML = descr.value + '<hr class="resume--hr">'
 }
 
-// function updateExperience() {
-//     experience.querySelector('.resume--experience').innerHTML = `
-//     <h2 class="resume--about--header">გამოცდილება</h2>
-//     <p class='resume--position'>${positionInput.value}, ${employerInput.value}</p>
-//     `
-// }
 
-function updateEmployer(input) {
-    experience.querySelector('.resume--experience').querySelector('.resume--position').innerHTML += `${input.value}
-    `
-}
-
-
-function updateStartDates(input) {
-    experience.querySelector('.resume--dates').innerHTML+= `${input.value} - `
-}
-
-function updateDueDates(input) {
-    experience.querySelector('.resume--dates').innerHTML+= `${input.value}`
-}
 
 
 
@@ -453,17 +461,17 @@ async function populateResume(formData) {
             <hr class="resume--hr">`
     }
   
-    if (formData.position || formData.employer) {
-        experience.querySelector('.resume--experience').innerHTML = `
-            <h2 class="resume--about--header">გამოცდილება</h2>
-            <p class='resume--position'>${formData.position}, ${formData.employer}</p>`
-    }
+    // if (formData.position || formData.employer) {
+    //     experience.querySelector('.resume--experience').innerHTML = `
+    //         <h2 class="resume--about--header">გამოცდილება</h2>
+    //         <p class='resume--position'>${formData.position}, ${formData.employer}</p>`
+    // }
 
-    if (formData.start_date || formData.due_date) {
-        experience.querySelector('.resume--dates').innerHTML = `${formData.start_date} - ${formData.due_date}`
-    }
+    // if (formData.start_date || formData.due_date) {
+    //     experience.querySelector('.resume--dates').innerHTML = `${formData.start_date} - ${formData.due_date}`
+    // }
 
-    if (formData.description) experience.querySelector('.resume--description').innerHTML = formData.description + '<hr class="resume--hr">'
+    // if (formData.description) experience.querySelector('.resume--description').innerHTML = formData.description + '<hr class="resume--hr">'
 
     if (formData.institute || formData.degree) {
 
