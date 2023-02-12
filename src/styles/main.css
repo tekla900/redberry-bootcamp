@@ -422,3 +422,53 @@ select {
     color: #98E37E;
     display: none;
 }
+
+/* COMPLETED RESUME */
+
+.completed--resume {
+    width: 822px;
+    height: auto;
+    margin: 0 auto;
+    margin-top: 54px;
+    border: 0.8px solid #000000;
+    background-color: white;
+    position: relative;
+}
+
+.completed--resume .resume {
+    padding: 0;
+    width: 622px;
+    margin: 0 auto;
+    margin-top: 68px;
+    margin-bottom: 305px;
+}
+
+.completed--resume hr {
+    width: 662px;
+    border: 1px solid #C8C8C8;
+}
+
+.pop-up {
+    position: absolute;
+    width: 427px;
+    height: 167px;
+    top: 53px;
+    right: 70px;
+    border: 1px solid #E4E4E4;
+    box-shadow: 0px 4px 28px 0px #00000040;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+}
+
+.pop-up div {
+    width: 364px;
+}
+
+#close-popup {
+    position: absolute;
+    top: 17.44px;
+    right: 11.44px;
+    cursor: pointer;
+}
+/*  */

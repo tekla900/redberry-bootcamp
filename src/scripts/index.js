@@ -14,12 +14,6 @@ const aboutMeInput = document.getElementById('about_me')
 const emailInput = document.getElementById('email')
 const numberInput = document.getElementById('phone_number')
 
-
-// const instituteInput = document.getElementById('institute')
-// const degreeSelect = document.getElementById('degree')
-// const dueDateEdu = document.getElementById('due_date_edu')
-// const descriptionEdu = document.getElementById('description_edu')
-
 const inputsFirstPage = [nameInput, surnameInput, aboutMeInput, emailInput, numberInput, fileInput]
 const inputsSecPage = document.querySelector('.experience').querySelectorAll("input, select, checkbox, textarea")
 const inputsThirdPage = document.querySelector('.education').querySelectorAll("input, select, checkbox, textarea")
@@ -27,26 +21,23 @@ const inputsThirdPage = document.querySelector('.education').querySelectorAll("i
 const form = document.querySelector('form')
 const formElements = form.elements
 
-// const addExperience = document.getElementById('add--experience')
-// const addEducationBtn = document.getElementById('add--education')
-
 let positionCounter = 0
 let eduCounter = 0
 let experiences = []
 let educations = []
 
 // function saveExperienceDataToLocalStorage() {
-//     const position = document.getElementById(`position-${positionCounter}`).value;
-//     const employer = document.getElementById(`employer-${positionCounter}`).value;
-//     const startDate = document.getElementById(`start_date-${positionCounter}`).value;
-//     const dueDate = document.getElementById(`due_date-${positionCounter}`).value;
-//     const description = document.getElementById(`description-${positionCounter}`).value;
+//     const position = document.getElementById(`position-${positionCounter}`).value
+//     const employer = document.getElementById(`employer-${positionCounter}`).value
+//     const startDate = document.getElementById(`start_date-${positionCounter}`).value
+//     const dueDate = document.getElementById(`due_date-${positionCounter}`).value
+//     const description = document.getElementById(`description-${positionCounter}`).value
   
-//     localStorage.setItem(`position-${positionCounter}`, position);
-//     localStorage.setItem(`employer-${positionCounter}`, employer);
-//     localStorage.setItem(`start_date-${positionCounter}`, startDate);
-//     localStorage.setItem(`due_date-${positionCounter}`, dueDate);
-//     localStorage.setItem(`description-${positionCounter}`, description);
+//     localStorage.setItem(`position-${positionCounter}`, position)
+//     localStorage.setItem(`employer-${positionCounter}`, employer)
+//     localStorage.setItem(`start_date-${positionCounter}`, startDate)
+//     localStorage.setItem(`due_date-${positionCounter}`, dueDate)
+//     localStorage.setItem(`description-${positionCounter}`, description)
 // }
   
 const addEducation = () => {
@@ -268,18 +259,6 @@ emailInput.addEventListener('input', updateEmail)
 
 numberInput.addEventListener('input',  () => validateInput(numberInput, numberInput.dataset.regex))
 numberInput.addEventListener('input', updateNumber)
-
-// instituteInput.addEventListener('input', () => validateInput(instituteInput, instituteInput.dataset.regex))
-// instituteInput.addEventListener('input', updateInstitute)
-
-// degreeSelect.addEventListener('input', () => validateInput(degreeSelect, degreeSelect.dataset.regex))
-// degreeSelect.addEventListener('input', updateInstitute)
-
-// dueDateEdu.addEventListener('input', () => validateInput(dueDateEdu, dueDateEdu.dataset.regex))
-// dueDateEdu.addEventListener('input', updateDatesEdu)
-
-// descriptionEdu.addEventListener('input', () => validateInput(descriptionEdu, descriptionEdu.dataset.regex))
-// descriptionEdu.addEventListener('input', updateDescriptionEdu)
 
 fileInput.addEventListener('change', updateResumeImg)
 fileInput.addEventListener('input', saveFile)
@@ -592,22 +571,6 @@ async function populateResume(formData) {
 
 }
 
-function readFileAsBinaryString(fileInput) {
-  return new Promise((resolve, reject) => {
-    if (fileInput.files.length > 0) {
-      const reader = new FileReader()
-      reader.onload = function() {
-        const binaryString = reader.result
-        let file = new File([binaryString], 'img.jpeg', {type: 'image/jpeg'})
-        resolve(file)
-      }
-      reader.readAsBinaryString(fileInput.files[0])
-    } else {
-      reject(new Error('No file selected'))
-    }
-  })
-}
-
 
 // SUBMITING DATA
 async function handleFormSubmit(e) {
@@ -660,13 +623,84 @@ async function handleFormSubmit(e) {
 
             throw new Error(errorMessage)
         } else {
-            console.log('yay u did it')
+            const responseBody = await response.json()
+            showCompletedResume(responseBody)
         }
 
     } catch (error) {
         console.error(error)
     }
-
 }
 
 
+function showCompletedResume(response) {
+    const body = document.querySelector('body')
+
+    body.innerHTML= `
+        <div class="nav__button--secondary" onclick="goToLanding()">
+            <i class="fa-solid fa-angle-left fa-lg"></i>
+        </div>
+
+        <section class="completed--resume">
+            <div class="resume" id="resume--div">
+                <div class="first-div">
+                    <div class="first-page">
+                        <div class="first--col">
+                            <h1 class="resume--fullname">${response.name} ${response.surname}</h1>
+                            <div class="resume--contact">
+                                <div><i class="fa-solid fa-at"></i> <p class="resume--contact--info">${response.email}</p></div>
+                                <div><i class="fa-solid fa-phone"></i> <p class="resume--contact--info">${response.phone_number}</p></div>
+                            </div>
+                
+                            <div class="resume--about">
+                                <h2 class="resume--about--header">ᲩᲔᲛ ᲨᲔᲡᲐᲮᲔᲑ</h2>
+                                <p class="resume--about--info">${response.about_me}</p>
+                                <hr class="resume--hr">
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="sec-page-0">
+                        <div class="resume--experience--col" id="experience-resume-0">
+                            <div class="resume--experience">
+                                <h2 class="resume--about--header" id="resume--header-0"></h2>
+                                <p class='resume--position' id="resume--position-0"></p>
+                                <span class='resume--position' id="resume--employer-0"></span>
+                            </div>
+
+                            <p class="resume--dates" id="resume-start-date-0"></p>
+                            <span class="resume--dates" id="resume-due-date-0"></span>
+
+                            <p class="resume--description" id="resume-description-0"></p>
+                        </div>
+                    </div>
+
+                    <div class="third-page">
+                        <div class="resume--education--col" id="education-resume-0">
+                            <div class="resume--experience"></div>
+                            <p class="resume--dates"></p>
+                            <p class="resume--description"></p>
+                        </div>
+                    </div>
+                </div>
+                
+
+                <div class="resume--photo">
+                <img src="https://resume.redberryinternship.ge/${response.image}" class='resume--image'>
+                </div>
+            </div>
+            <img class="logo--small" src="./src/images/redberry-logo-small.png">  
+        </section>
+
+        <section class="pop-up">
+            <span id="close-popup" onclick="closePopUp()">x</span>
+            <div>
+                <h2>რეზიუმე წარმატებით გაიგზავნა &#127881;</h2>
+            </div>
+        </section>
+    `
+}
+
+function closePopUp() {
+    document.querySelector('.pop-up').style.display = 'none'
+}
