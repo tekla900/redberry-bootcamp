@@ -659,34 +659,14 @@ function showCompletedResume(response) {
                             </div>
                         </div>
                     </div>
-                
-                    <div class="sec-page-0">
-                        <div class="resume--experience--col" id="experience-resume-0">
-                            <div class="resume--experience">
-                                <h2 class="resume--about--header" id="resume--header-0"></h2>
-                                <p class='resume--position' id="resume--position-0"></p>
-                                <span class='resume--position' id="resume--employer-0"></span>
-                            </div>
 
-                            <p class="resume--dates" id="resume-start-date-0"></p>
-                            <span class="resume--dates" id="resume-due-date-0"></span>
-
-                            <p class="resume--description" id="resume-description-0"></p>
-                        </div>
-                    </div>
-
-                    <div class="third-page">
-                        <div class="resume--education--col" id="education-resume-0">
-                            <div class="resume--experience"></div>
-                            <p class="resume--dates"></p>
-                            <p class="resume--description"></p>
-                        </div>
-                    </div>
+                    <div class="sec-page-0"></div>
+                    <div class="third-page"></div>
                 </div>
                 
 
                 <div class="resume--photo">
-                <img src="https://resume.redberryinternship.ge/${response.image}" class='resume--image'>
+                    <img src="https://resume.redberryinternship.ge/${response.image}" class='resume--image'>
                 </div>
             </div>
             <img class="logo--small" src="./src/images/redberry-logo-small.png">  
@@ -699,6 +679,54 @@ function showCompletedResume(response) {
             </div>
         </section>
     `
+
+    const experienceArr = response.experiences
+    const expDiv = document.querySelector('.sec-page-0')
+    let isFirstExp = true
+
+    const educationArr = response.educations
+    const eduDiv = document.querySelector('.third-page')
+    let isFirstEdu = true
+
+    experienceArr.forEach(el => {
+        const elDiv = ` 
+            <div class="resume--experience--col" >
+                <div class="resume--experience">
+                    ${isFirstExp ? '<h2 class="resume--about--header">გამოცდილება</h2>' : ''}
+                    <p class='resume--position'>${el.position}, </p>
+                    <span class='resume--position'>${el.employer}</span>
+                </div>
+
+                <p class="resume--dates">${el.start_date} - ${el.due_date}</p>
+
+                <p class="resume--description" id="resume-description-0">${el.description}</p>
+
+            </div>
+        `
+        isFirstExp = false
+        expDiv.innerHTML += elDiv 
+    })
+
+    expDiv.innerHTML += '<hr class="resume--hr">'
+
+    educationArr.forEach(el => {
+        const elDiv = `
+        <div class="resume--education--col" id="education-resume-0">
+            <div class="resume--experience">
+                ${isFirstEdu ? '<h2 class="resume--about--header">ᲒᲐᲜᲐᲗᲚᲔᲑᲐ</h2>' : ''}
+                <p class='resume--position'>${el.institute}, ${el.degree}</p>
+            </div>
+            <p class="resume--dates">${el.due_date}</p>
+            <p class="resume--description">${el.description}</p>
+        </div>
+        `
+
+        isFirstEdu = false
+        eduDiv.innerHTML += elDiv
+    })
+
+    eduDiv.innerHTML += '<hr class="resume--hr">'
+
 }
 
 function closePopUp() {

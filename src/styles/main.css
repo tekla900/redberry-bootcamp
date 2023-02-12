@@ -333,6 +333,10 @@ input[name="name"], input[name="surname"], input[type="date"] {
     border-radius: 50%;
 }
 
+.resume--experience--col, .resume--education--col {
+    margin-bottom: 40px;
+}
+
 /* EXPERIENCES */
 
 .employer {
@@ -388,7 +392,6 @@ select {
     background: #FFFFFF;
     border: 1px solid #BCBCBC;
     border-radius: 4px;
-
 }
 
 .input-groups__selects {
@@ -399,7 +402,6 @@ select {
 #description_edu {
     height: 179px;
 }
-
 
 .position--div {
     position: relative;
