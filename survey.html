@@ -149,9 +149,9 @@
 
             <section class="education tab" style="display: none;">
                 <div class="input--group ">
-                    <label class="input-group__label" for="institute">სასწავლებელი</label>
+                    <label class="input-group__label" for="institute-0">სასწავლებელი</label>
                     <div class="position--div">
-                        <input class="input-group__input" type="text" name="institute" id="institute" placeholder="თანამდებობა" data-regex="^.{2,}$">
+                        <input class="input-group__input" type="text" name="institute" id="institute-0" placeholder="თანამდებობა" data-regex="^.{2,}$">
                         <i class="fas fa-check-circle validation--icons outside"></i>
                         <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
                     </div>
@@ -160,9 +160,9 @@
 
                 <div class="input-groups__selects">
                     <div class="input--group">
-                        <label for="degree">ხარისხი</label>
+                        <label for="degree-0">ხარისხი</label>
                         <div class="position--div">
-                            <select name="degree" id="degree">
+                            <select name="degree" id="degree-0">
                                 <option value="0" disabled>აირჩიეთ ხარისხი</option>
                             </select>                           
                             <i class="fas fa-check-circle validation--icons outside"></i>
@@ -171,9 +171,9 @@
                     </div>
                     
                     <div class="input--group">
-                        <label for="due_date_edu">დამთავრების რიცხვი</label>
+                        <label for="due_date_edu-0">დამთავრების რიცხვი</label>
                         <div class="position--div">
-                            <input type="date" id="due_date_edu" name="due_date_edu"
+                            <input type="date" id="due_date_edu-0" name="due_date_edu"
                             value="mm/dd/yyyy" min="1900-01-01">                         
                             <i class="fas fa-check-circle validation--icons outside"></i>
                             <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
@@ -182,9 +182,9 @@
                 </div>
 
                 <div class="input--group">
-                    <label class="input-group__label" for="description_edu">აღწერა</label>
+                    <label class="input-group__label" for="description_edu-0">აღწერა</label>
                     <div class="position--div">
-                        <textarea name="description_ed" id="description_edu"  placeholder="როლი თანამდებობაზე და ზოგადი აღწერა" data-regex="^.+$"></textarea>                       
+                        <textarea name="description_ed" id="description_edu-0"  placeholder="როლი თანამდებობაზე და ზოგადი აღწერა" data-regex="^.+$"></textarea>                       
                         <i class="fas fa-check-circle validation--icons outside"></i>
                         <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
                     </div>
@@ -238,7 +238,7 @@
             </div>
 
             <div class="third-page">
-                <div class="resume--education--col">
+                <div class="resume--education--col" id="education-resume-0">
                     <div class="resume--experience"></div>
                     <p class="resume--dates"></p>
                     <p class="resume--description"></p>
