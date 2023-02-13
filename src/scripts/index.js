@@ -96,7 +96,7 @@ function validateInput(input, regex) {
 
   
 function validatePage(inputs) {
-    return inputs.every(input => input.type === 'file' ? checkForFileUpload(input) : validateInput(input, input.dataset.regex));
+    return inputs.every(input => input.type === 'file' ? checkForFileUpload(input) : validateInput(input, input.dataset.regex))
 }
 
 const checkForFileUpload = (input) => input.files.length > 0 || localStorage.getItem('image')
@@ -123,10 +123,10 @@ function nextPrev(n) {
           ? inputsFirstPage
           : currentTab === 1
             ? Array.from(document.querySelector('.experience').querySelectorAll("input, select, checkbox, textarea"))
-            : Array.from(document.querySelector('.education').querySelectorAll("input, select, checkbox, textarea"));
+            : Array.from(document.querySelector('.education').querySelectorAll("input, select, checkbox, textarea"))
       
         if (!validatePage(inputsToValidate)) {
-          return false;
+          return false
         }
     }
         
@@ -218,21 +218,21 @@ for (let i = 0; i < formElements.length; i++) {
 
 // Retrieve form data from local storage and populate the form fields when the page is loaded
 window.addEventListener('load', function() {
-    const formData = JSON.parse(localStorage.getItem('formData'));
-    const experiences = JSON.parse(localStorage.getItem('experiences'));
-    const educations = JSON.parse(localStorage.getItem('educations'));
+    const formData = JSON.parse(localStorage.getItem('formData'))
+    // const experiences = JSON.parse(localStorage.getItem('experiences'))
+    // const educations = JSON.parse(localStorage.getItem('educations'))
 
     if (formData) {
-        populateForm(formData);
-        populateResume(formData);
+        populateForm(formData)
+        populateResume(formData)
     }
     // if (experiences) {
-    //     populateExpResume(experiences);
+    //     populateExpResume(experiences)
     // }
     // if (educations) {
-    //     populateEduResume(educations);
+    //     populateEduResume(educations)
     // }
-});
+})
 
 // Helper function to get the form data as an object
 function getFormData() {
@@ -251,19 +251,10 @@ function getFormData() {
 function populateForm(formData) {
     for (let key in formData) {
         let element = document.getElementsByName(key)[0]
-        // console.log({element});
-        // console.log(element.tagName);
-        // if (element.type != 'file') {
-        //     element.value = Number(formData[key])
-        // }
-
         if(!(element.tagName === 'INPUT' && element.type === 'file')) {
             if(!(element.tagName === 'SELECT')) {
                 element.value = formData[key]
-
             }
-            // console.log(element.tagName);
-            // console.log('აქ რა შემთხვევაშ შემოდის?');
             element.value = formData[key]
         }
     }
@@ -520,7 +511,7 @@ function updateEduDescription(id) {
     document.getElementById(`education-desc-${id.slice(-1)}`).innerHTML = desc
 }
 
-const saveToLocalStorage = id => localStorage.setItem(id, document.getElementById(id).value);
+const saveToLocalStorage = id => localStorage.setItem(id, document.getElementById(id).value)
 
 function saveExpAndEduData() {
     const experiences = []
@@ -655,10 +646,7 @@ async function handleFormSubmit(e) {
 
     const file = await fetch(imageUrl).then(res => res.blob())
 
-    formData.append("name", localStorageData.name)
-    formData.append("surname", localStorageData.surname)
-    formData.append("email", localStorageData.email)
-    formData.append("phone_number", localStorageData.phone_number)
+    formData.append("phone_number", localStorageData.phone_number.replace(/\s/g, ""))
     formData.append("about_me", localStorageData.about_me)
     formData.append("image", file)
     

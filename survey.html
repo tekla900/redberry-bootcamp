@@ -80,7 +80,7 @@
                 <div class="input--group">
                     <label class="input-group__label" for="phone_number">მობილურის ნომერი</label>
                     <div class="position--div">
-                        <input class="input-group__input" type="text" name="phone_number" id="phone_number" placeholder="+995 551 12 34 56" data-regex="^\+995\s\d{3}\s\d{3}\s\d{3}$">
+                        <input class="input-group__input" type="text" name="phone_number" id="phone_number" placeholder="+995 551 12 34 56" data-regex="^\+995\s?\d{3}\s?\d{3}\s?\d{3}$">
                         <i class="fas fa-check-circle validation--icons outside"></i>
                         <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
                     </div>
@@ -154,7 +154,7 @@
                 <div class="input--group ">
                     <label class="input-group__label" for="institute-0">სასწავლებელი</label>
                     <div class="position--div">
-                        <input class="input-group__input" type="text" name="institute" id="institute-0" placeholder="თანამდებობა" data-regex="^.{2,}$"
+                        <input class="input-group__input" type="text" name="institute" id="institute-0" placeholder="სასწავლებელი" data-regex="^.{2,}$"
                         oninput="updateEdu(this.id); saveToLocalStorage(this.id); validateInput(this, this.getAttribute('data-regex'))">
                         <i class="fas fa-check-circle validation--icons outside"></i>
                         <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
