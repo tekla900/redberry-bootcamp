@@ -93,7 +93,8 @@
                 <div class="input--group ">
                     <label class="input-group__label" for="position-0">თანამდებობა</label>
                     <div class="position--div">
-                        <input class="input-group__input" type="text" oninput="updateExperience(0); validateInput(this, this.getAttribute('data-regex'))" name="position" id="position-0" placeholder="თანამდებობა" data-regex="^.{2,}$">
+                        <input class="input-group__input" type="text" name="position" id="position-0" placeholder="თანამდებობა" data-regex="^.{2,}$"
+                        oninput="updateExperience(this.id); saveToLocalStorage(this.id); validateInput(this, this.getAttribute('data-regex'))">
                         <i class="fas fa-check-circle validation--icons outside"></i>
                         <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
                     </div>
@@ -103,7 +104,8 @@
                 <div class="input--group employer">
                     <label class="input-group__label" for="employer-0">დამსაქმებელი</label>
                     <div class="position--div">
-                        <input class="input-group__input" type="text" oninput="updateExperience(0); validateInput(this, this.getAttribute('data-regex'))" name="employer" id="employer-0" placeholder="დამსაქმებელი" data-regex="^.{2,}$">
+                        <input class="input-group__input" type="text" name="employer" id="employer-0" placeholder="დამსაქმებელი" data-regex="^.{2,}$"
+                        oninput="updateExperience(this.id); saveToLocalStorage(this.id); validateInput(this, this.getAttribute('data-regex'))" >
                         <i class="fas fa-check-circle validation--icons outside"></i>
                         <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
                     </div>
@@ -114,8 +116,8 @@
                     <div class="input--group">
                         <label for="start_date-0">დაწყების რიცხვი</label>
                         <div class="position--div">
-                            <input type="date" id="start_date-0" name="start_date"
-                            value="mm/dd/yyyy" min="1900-01-01" oninput="updateDates(0); validateInput(this, this.getAttribute('data-regex'))">
+                            <input type="date" id="start_date-0" name="start_date" value="mm/dd/yyyy" min="1900-01-01" 
+                            oninput="saveToLocalStorage(this.id); updateDates(this.id); validateInput(this, this.getAttribute('data-regex'))">
                             <i class="fas fa-check-circle validation--icons outside"></i>
                             <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
                         </div>
@@ -125,8 +127,8 @@
                     <div class="input--group">
                         <label for="due_date-0">დამთავრების რიცხვი</label> 
                         <div class="position--div">
-                            <input type="date" id="due_date-0" name="due_date"
-                            value="mm/dd/yyyy" min="1900-01-01" oninput="updateDates(0); validateInput(this, this.getAttribute('data-regex'))" >
+                            <input type="date" id="due_date-0" name="due_date" value="mm/dd/yyyy" min="1900-01-01" 
+                            oninput="saveToLocalStorage(this.id); updateDates(this.id); validateInput(this, this.getAttribute('data-regex'))" >
                             <i class="fas fa-check-circle validation--icons outside"></i>
                             <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
                         </div>
@@ -136,7 +138,8 @@
                 <div class="input--group experience--info">
                     <label class="input-group__label" for="description-0">აღწერა</label>
                     <div class="position--div">
-                        <textarea name="description" id="description-0" oninput="updateDescription(0); validateInput(this, this.getAttribute('data-regex'))" placeholder="როლი თანამდებობაზე და ზოგადი აღწერა" data-regex="^.+$"></textarea>
+                        <textarea name="description" id="description-0" placeholder="როლი თანამდებობაზე და ზოგადი აღწერა" data-regex="^.+$"
+                        oninput="saveToLocalStorage(this.id); updateDescription(this.id); validateInput(this, this.getAttribute('data-regex'))" ></textarea>
                         <i class="fas fa-check-circle validation--icons outside"></i>
                         <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
                     </div>
@@ -151,7 +154,8 @@
                 <div class="input--group ">
                     <label class="input-group__label" for="institute-0">სასწავლებელი</label>
                     <div class="position--div">
-                        <input class="input-group__input" type="text" name="institute" id="institute-0" placeholder="თანამდებობა" data-regex="^.{2,}$">
+                        <input class="input-group__input" type="text" name="institute" id="institute-0" placeholder="თანამდებობა" data-regex="^.{2,}$"
+                        oninput="updateEdu(this.id); saveToLocalStorage(this.id); validateInput(this, this.getAttribute('data-regex'))">
                         <i class="fas fa-check-circle validation--icons outside"></i>
                         <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
                     </div>
@@ -162,7 +166,7 @@
                     <div class="input--group">
                         <label for="degree-0">ხარისხი</label>
                         <div class="position--div">
-                            <select name="degree" id="degree-0">
+                            <select name="degree" id="degree-0" oninput="updateEdu(this.id); saveToLocalStorage(this.id); validateInput(this, this.getAttribute('data-regex'))">
                                 <option value="0" disabled>აირჩიეთ ხარისხი</option>
                             </select>                           
                             <i class="fas fa-check-circle validation--icons outside"></i>
@@ -173,8 +177,8 @@
                     <div class="input--group">
                         <label for="due_date_edu-0">დამთავრების რიცხვი</label>
                         <div class="position--div">
-                            <input type="date" id="due_date_edu-0" name="due_date_edu"
-                            value="mm/dd/yyyy" min="1900-01-01">                         
+                            <input type="date" id="due_date_edu-0" name="due_date_edu" value="mm/dd/yyyy" min="1900-01-01"
+                            oninput="updateEduDates(this.id); saveToLocalStorage(this.id); validateInput(this, this.getAttribute('data-regex'))">                         
                             <i class="fas fa-check-circle validation--icons outside"></i>
                             <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
                         </div>
@@ -184,7 +188,8 @@
                 <div class="input--group">
                     <label class="input-group__label" for="description_edu-0">აღწერა</label>
                     <div class="position--div">
-                        <textarea name="description_ed" id="description_edu-0"  placeholder="როლი თანამდებობაზე და ზოგადი აღწერა" data-regex="^.+$"></textarea>                       
+                        <textarea name="description_ed" id="description_edu-0"  placeholder="როლი თანამდებობაზე და ზოგადი აღწერა" data-regex="^.+$"
+                        oninput="updateEduDescription(this.id); saveToLocalStorage(this.id); validateInput(this, this.getAttribute('data-regex'))"></textarea>                       
                         <i class="fas fa-check-circle validation--icons outside"></i>
                         <i class="fa-solid fa-triangle-exclamation validation--icons outside"></i>
                     </div>
@@ -227,11 +232,11 @@
                     <div class="resume--experience">
                         <h2 class="resume--about--header" id="resume--header-0"></h2>
                         <p class='resume--position' id="resume--position-0"></p>
-                        <span class='resume--position' id="resume--employer-0"></span>
+                        <!-- <span class='resume--position' id="resume--employer-0"></span> -->
                     </div>
 
                     <p class="resume--dates" id="resume-start-date-0"></p>
-                    <span class="resume--dates" id="resume-due-date-0"></span>
+                    <!-- <span class="resume--dates" id="resume-due-date-0"></span> -->
 
                     <p class="resume--description" id="resume-description-0"></p>
                 </div>
@@ -239,9 +244,9 @@
 
             <div class="third-page">
                 <div class="resume--education--col" id="education-resume-0">
-                    <div class="resume--experience"></div>
-                    <p class="resume--dates"></p>
-                    <p class="resume--description"></p>
+                    <div class="resume--experience" id="edu-headers-0"></div>
+                    <p class="resume--dates" id="edu-dates-0"></p>
+                    <p class="resume--description" id="education-desc-0"></p>
                 </div>
             </div>
         </div>
