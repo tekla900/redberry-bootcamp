@@ -361,7 +361,7 @@ addEducationBtn.addEventListener('click', function() {
 
     <hr>
     `
-
+    fetchDegrees(eduCount)
     const resume = `
     <div class="resume--education--col" id="education-resume-${eduCount}">
         <div class="resume--experience" id="edu-headers-${eduCount}"></div>
@@ -476,7 +476,7 @@ function updateExperience(id) {
 
 function updateEdu(id) {
     let select = document.getElementById(`degree-${id.slice(-1)}`)
-    fetchDegrees(id.slice(-1))
+    // fetchDegrees(id.slice(-1))
     const education = document.getElementById(`education-resume-${id.slice(-1)}`)
     const institute = document.getElementById(`institute-${id.slice(-1)}`).value
     const degree = select.options[select.selectedIndex].text
