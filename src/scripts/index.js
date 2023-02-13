@@ -70,15 +70,21 @@ async function saveFile(e) {
 
 // VALIDATION
 function validateInput(input, regex) {
-    if (input.type === 'select') {
-        console.log(input.value);
-        console.log(input.value !== 0);
-        console.log(input.value != 0);
 
+    if(input.tagName == 'SELECT') {
+        if (input.value == 0) {
+            input.classList.add('invalid')
+            input.classList.remove('valid')
+            return false 
+        } else {
+            input.classList.add('valid')
+            input.classList.remove('invalid')
+            return true
+        }
     }
+
     const isValid = input.type === 'date' ? input.value !== "" :
-                    input.type === 'select' ? input.value !== 0 :
-                    input.value.match(regex) !== null
+                                            input.value.match(regex) !== null
 
     input.classList.toggle('valid', isValid)
     input.classList.toggle('invalid', !isValid)
@@ -245,11 +251,19 @@ function getFormData() {
 function populateForm(formData) {
     for (let key in formData) {
         let element = document.getElementsByName(key)[0]
+        // console.log({element});
+        // console.log(element.tagName);
+        // if (element.type != 'file') {
+        //     element.value = Number(formData[key])
+        // }
 
         if(!(element.tagName === 'INPUT' && element.type === 'file')) {
             if(!(element.tagName === 'SELECT')) {
-                element.value = Number(formData[key])
+                element.value = formData[key]
+
             }
+            // console.log(element.tagName);
+            // console.log('აქ რა შემთხვევაშ შემოდის?');
             element.value = formData[key]
         }
     }
@@ -458,7 +472,6 @@ addExperienceBtn.addEventListener("click", function() {
 
 
 function updateExperience(id) {   
-    console.log('update experience');
     const experience = document.getElementById(`experience-resume-${id.slice(-1)}`)
     const pos = document.getElementById(`position-${id.slice(-1)}`).value
     const employer = document.getElementById(`employer-${id.slice(-1)}`).value
@@ -471,14 +484,11 @@ function updateExperience(id) {
 }
 
 function updateEdu(id) {
-    console.log('update edu');
     let select = document.getElementById(`degree-${id.slice(-1)}`)
     fetchDegrees(id.slice(-1))
     const education = document.getElementById(`education-resume-${id.slice(-1)}`)
     const institute = document.getElementById(`institute-${id.slice(-1)}`).value
-    // console.log(select.options[select.selectedIndex])
     const degree = select.options[select.selectedIndex].text
-    // console.log(degree);
 
     const educationElement = `<p class='resume--position'>${institute}, ${degree}</p>`
     const content = id.slice(-1) == 0
@@ -489,8 +499,6 @@ function updateEdu(id) {
 }
 
 function updateDates(id) {
-    console.log('update dates experience');
-
     const start = document.getElementById(`start_date-${id.slice(-1)}`).value
     const due = document.getElementById(`due_date-${id.slice(-1)}`).value
     
@@ -498,22 +506,16 @@ function updateDates(id) {
 }
 
 function updateEduDates (id) {
-    console.log('update dates edu');
-
     const due = document.getElementById(`due_date_edu-${id.slice(-1)}`).value
     document.getElementById(`edu-dates-${id.slice(-1)}`).innerHTML = due
 }
 
 function updateDescription(id) {
-    console.log('update description experience');
-
     const desc = document.getElementById(`description-${id.slice(-1)}`).value
     document.getElementById(`resume-description-${id.slice(-1)}`).innerHTML = desc
 }
 
 function updateEduDescription(id) {
-    console.log('update description edu');
-
     const desc = document.getElementById(`description_edu-${id.slice(-1)}`).value
     document.getElementById(`education-desc-${id.slice(-1)}`).innerHTML = desc
 }
@@ -645,7 +647,6 @@ async function handleFormSubmit(e) {
     }
 
     for(let i in educations) {
-        console.log();
         formData.append(`educations[${i}][institute]`, educations[i].institute.toString())
         formData.append(`educations[${i}][degree_id]`, educations[i].degree_id.toString())
         formData.append(`educations[${i}][due_date]`, educations[i].due_date.toString())
