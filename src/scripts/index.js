@@ -252,8 +252,11 @@ function populateForm(formData) {
     for (let key in formData) {
         let element = document.getElementsByName(key)[0]
         if(!(element.tagName === 'INPUT' && element.type === 'file')) {
-            if(!(element.tagName === 'SELECT')) {
-                element.value = formData[key]
+            if((element.tagName === 'SELECT')) {
+                const selectedOption = element.querySelector(`option[value="${formData[key]}"]`);
+                if (selectedOption) {
+                  selectedOption.selected = true;
+                }
             }
             element.value = formData[key]
         }
@@ -604,6 +607,7 @@ function fetchDegrees(id) {
     fetch('https://resume.redberryinternship.ge/api/degrees')
     .then(res => res.json())
     .then(res => {
+        console.log('shemovid');
         let degreeSelect = document.getElementById(`degree-${id}`)
         res.forEach(el => {
             const option = document.createElement('option')
@@ -613,6 +617,7 @@ function fetchDegrees(id) {
             degreeSelect.appendChild(option)
         })
     })
+   
 }
 fetchDegrees(0)
 
