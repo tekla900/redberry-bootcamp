@@ -646,6 +646,9 @@ async function handleFormSubmit(e) {
 
     const file = await fetch(imageUrl).then(res => res.blob())
 
+    formData.append("name", localStorageData.name)
+    formData.append("surname", localStorageData.surname)
+    formData.append("email", localStorageData.email)
     formData.append("phone_number", localStorageData.phone_number.replace(/\s/g, ""))
     formData.append("about_me", localStorageData.about_me)
     formData.append("image", file)
