@@ -253,9 +253,9 @@ function populateForm(formData) {
         let element = document.getElementsByName(key)[0]
         if(!(element.tagName === 'INPUT' && element.type === 'file')) {
             if((element.tagName === 'SELECT')) {
-                const selectedOption = element.querySelector(`option[value="${formData[key]}"]`);
+                const selectedOption = element.querySelector(`option[value="${formData[key]}"]`)
                 if (selectedOption) {
-                  selectedOption.selected = true;
+                  selectedOption.selected = true
                 }
             }
             element.value = formData[key]
@@ -377,7 +377,7 @@ addEducationBtn.addEventListener('click', function() {
 
     document.querySelector('.education').insertBefore(educationDiv, addEducationBtn)
 
-    eduCount++;
+    eduCount++
 })
 
 addExperienceBtn.addEventListener("click", function() {
@@ -607,7 +607,6 @@ function fetchDegrees(id) {
     fetch('https://resume.redberryinternship.ge/api/degrees')
     .then(res => res.json())
     .then(res => {
-        console.log('shemovid');
         let degreeSelect = document.getElementById(`degree-${id}`)
         res.forEach(el => {
             const option = document.createElement('option')
